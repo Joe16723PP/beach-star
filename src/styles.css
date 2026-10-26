@@ -243,3 +243,12 @@
 @media (prefers-reduced-motion: reduce) {
   .overlay .dialog.screen button:active:not(:disabled) { transform: none; }
 }
+@media (max-width: 600px) {
+  .topbar:not(:has(.icon-button:not([hidden]))) .shift-card {
+    margin-right: calc(44px + 5px + 44px + 5px);
+  }
+  .key-help {
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+}
