@@ -24,3 +24,14 @@
   .carry-status { top: auto; bottom: 38px; padding: 4px 8px; }
   .statusbar { bottom: 6px; width: min(420px, 72%); min-height: 28px; }
 }
+
+.meter{position:relative;margin:14px auto;background:#e7f6f4;border:3px solid #15596a;overflow:hidden}
+.meter.pour{width:74px;height:180px;border-radius:8px 8px 30px 30px}
+.meter .fill{position:absolute;left:0;right:0;bottom:0;height:0;background:linear-gradient(#7ee0dc,#1aa7a4)}
+.meter .rim{position:absolute;left:0;right:0;top:8%;border-top:3px dashed #e0a24a}
+.meter.needle{width:240px;height:36px;border-radius:99px}
+.meter .sweet{position:absolute;top:0;bottom:0;left:44%;width:12%;background:#7dcaa8aa}
+.meter .needle-mark{position:absolute;top:-4px;left:0;width:4px;height:44px;margin-left:-2px;background:#c45248;border-radius:2px}
+.picks{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.picks button{background:#fff;color:#15596a;border-radius:12px;padding:10px 12px;font-weight:800}
+.picks button.on{background:#15596a;color:#fff}
