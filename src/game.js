@@ -108,9 +108,9 @@ class Popularity{
 }
 class GuestTypes{
   static kind(id){return guestKinds[id|0]||guestKinds[0]}
-  static roll(){return Math.floor(Math.random()*guestKinds.length)}
+  static roll(){const pool=level.kindPool||guestKinds.map(k=>k.id);return pool[Math.floor(Math.random()*pool.length)]}
   static pickRequest(kind,options){if(kind.pref&&options.includes(kind.pref)&&Math.random()<.72)return kind.pref;return AdDesk.pick(options)}
-  static create(kind,options,groupId,lag){const request=GuestTypes.pickRequest(kind,options),base=(timerStarted?52:120)*(1+save.upgrades.patience*.1),patience=base*kind.patience,entry=[{x:250,y:516},{x:700,y:516},{x:430,y:516}][Math.floor(Math.random()*3)];return {seat:null,kindId:kind.id,type:kind.sprite,request,patience,maxPatience:patience,wait:0,queueWait:0,tip:Math.random()<kind.tip?1:0,x:entry.x+(lag||0)*14,y:entry.y,state:'queueing',done:false,receivedOrder:false,visitCounted:false,ordersRemaining:level.services.length>1&&Math.random()<(level.number<5?.28:level.number<8?.42:.5)?1:0,phase:Math.random()*6,arrivalOrder:arrivalOrder++,groupId,facing:'front',path:[],pathIndex:0}}
+  static create(kind,options,groupId,lag){const request=GuestTypes.pickRequest(kind,options),base=(timerStarted?52:120)*(1+upRank('patience')*.1),patience=base*kind.patience,entry=[{x:250,y:516},{x:700,y:516},{x:430,y:516}][Math.floor(Math.random()*3)];return {seat:null,kindId:kind.id,type:kind.sprite,request,patience,maxPatience:patience,wait:0,queueWait:0,tip:Math.random()<kind.tip?1:0,x:entry.x+(lag||0)*14,y:entry.y,state:'queueing',done:false,receivedOrder:false,visitCounted:false,ordersRemaining:level.services.length>1&&Math.random()<(level.number<5?.28:level.number<8?.42:.5)?1:0,phase:Math.random()*6,arrivalOrder:arrivalOrder++,groupId,facing:'front',path:[],pathIndex:0}}
   static boothService(g){if(g.state==='rideLine'||g.state==='rideWait')return 'ride';if(['float','umbrella'].includes(g.request)&&g.state==='seated'&&!g.receivedOrder)return 'rental';const item=product[g.request];return item?.shop||null}
   static drawAccessory(g,y){const acc=GuestTypes.kind(g.kindId).acc;if(!acc)return;ctx.save();ctx.font='14px sans-serif';ctx.textAlign='center';ctx.fillText(acc,g.x,y);ctx.restore()}
 }
@@ -125,7 +125,7 @@ class ShiftScore{
 }
 class DayGoals{
   static spec(){const rows=[{type:'visits',n:level.goal,phase:'shift',title:'Welcome guests',note:'Required to finish the shift.'}];if(level.number===1)rows.push({type:'sell',item:'drink',n:2,phase:'shift',title:'Sell coconut coolers',note:'Each cooler you hand over counts.'},{type:'build',id:'bbq',cost:6,n:1,phase:'shift',title:'Build the Beach Grill',note:'Spend coins earned this shift. Tap the grill. Guests then start asking for skewers.'},{type:'rank',id:'prep',n:1,phase:'shop',title:'Faster cooler rank',note:'Required before the next shift. Next stays locked until this rank is met.'});if(level.number>=3)rows.push({type:'stars',n:Math.min(24,level.number*2+1),phase:'shop',title:'Star total for the resort',note:'Earn mood stars on earlier shifts. Next stays locked until you have enough stars.'});return rows}
-  static progress(g){if(g.type==='sell')return sold[g.item]|0;if(g.type==='rank')return g.id==='prep'?BarSpeed.rank():(save.upgrades[g.id]|0);if(g.type==='stars')return totalStars();return visits}
+  static progress(g){if(g.type==='sell')return sold[g.item]|0;if(g.type==='rank')return upRank(g.id);if(g.type==='stars')return totalStars();return visits}
   static lines(){return DayGoals.spec().map(g=>{const have=DayGoals.progress(g),isBuild=g.type==='build',builtDone=isBuild&&!!built[g.id];return {title:g.title,detail:isBuild?(builtDone?'Built':`${Math.min(earned,g.cost|0)} / ${g.cost} coins`):`${have} / ${g.n}`,done:isBuild?builtDone:have>=g.n,note:g.note,phase:g.phase}})}
   static shiftDone(){return DayGoals.lines().filter(g=>g.phase==='shift').every(g=>g.done)}
   static shopDone(){return DayGoals.lines().filter(g=>g.phase!=='shift').every(g=>g.done)}
