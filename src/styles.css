@@ -74,14 +74,17 @@
   font-size: max(16px, calc(16 * var(--u)));
 }
 .overlay .dialog.screen {
-  width: min(calc(720 * var(--u)), 100%);
+  width: min(100%, max(300px, calc(720 * var(--u))));
   max-height: calc(100vh - calc(56 * var(--u)));
   max-height: calc(100dvh - calc(56 * var(--u)));
   min-height: 0;
   margin: auto;
   overflow-x: hidden;
   overflow-y: auto;
-  padding: calc(22 * var(--u)) calc(22 * var(--u)) calc(28 * var(--u));
+  padding:
+    max(12px, calc(22 * var(--u)))
+    max(12px, calc(22 * var(--u)))
+    max(16px, calc(28 * var(--u)));
   text-align: center;
   color: #0B3760;
   background: linear-gradient(180deg, #F7F1E2 0%, #FAE7D0 50%, #FBE5C6 100%);
@@ -97,6 +100,7 @@
   font-weight: 400;
   font-size: calc(36 * var(--u));
   line-height: 1.05;
+  overflow-wrap: break-word;
   color: #0B3760;
 }
 .overlay .dialog.screen p {
@@ -138,19 +142,24 @@
 }
 .overlay .dialog.screen .button-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(calc(180 * var(--u)), 1fr));
-  gap: calc(12 * var(--u));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, max(8.5em, calc(180 * var(--u)))), 1fr));
+  gap: max(8px, calc(12 * var(--u)));
   margin: calc(16 * var(--u)) 0 0;
+  min-width: 0;
 }
 .overlay .dialog.screen .shop-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(calc(210 * var(--u)), 1fr));
-  gap: calc(14 * var(--u));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, max(8.5em, calc(210 * var(--u)))), 1fr));
+  gap: max(8px, calc(14 * var(--u)));
   margin: calc(14 * var(--u)) 0 calc(4 * var(--u));
+  min-width: 0;
 }
 .overlay .dialog.screen button {
   min-width: 0;
-  padding: calc(12 * var(--u)) calc(16 * var(--u));
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: break-word;
+  padding: max(8px, calc(12 * var(--u))) max(10px, calc(16 * var(--u)));
   border: calc(2 * var(--u)) solid #393827;
   border-radius: calc(18 * var(--u));
   background: linear-gradient(180deg, #fff 0%, #FCF5E8 20%, #F9EBDB 100%);
@@ -214,6 +223,14 @@
   color: #5A3319;
   cursor: default;
   transform: none;
+}
+.overlay .dialog.screen .picks {
+  min-width: 0;
+}
+.overlay .dialog.screen .picks button {
+  flex: 1 1 7.5em;
+  min-width: min(100%, 7.5em);
+  max-width: 100%;
 }
 .overlay .dialog.screen .picks button.on {
   background: linear-gradient(180deg, #FEFEFE 0%, #DEF7FD 100%);
