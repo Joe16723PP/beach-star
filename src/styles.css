@@ -52,3 +52,8 @@
 @media (max-width:600px) and (orientation:landscape){body{overflow:auto}.shell{width:100%;height:auto;min-height:100dvh;padding:0;margin:0;display:block}.game-card{display:block;padding:0}.canvas-wrap{display:block;width:100%;height:auto;aspect-ratio:16/9;container-type:inline-size}.canvas-wrap canvas{width:100%;height:100%;aspect-ratio:unset;object-fit:fill}.carry-status,.statusbar{position:static;transform:none;width:auto;margin:6px}.topbar,.help-row{display:none!important}}
 /* Narrow portrait screens: center the 16:9 frame, give it as much width as possible, and suggest rotating. */
 @media (max-width:700px) and (orientation:portrait){body{min-height:100dvh;display:flex;flex-direction:column;justify-content:center;overflow-x:hidden}.shell{width:100vw;max-width:none}body:after{content:"Rotate your device for a bigger beach";display:block;margin:12px auto 0;padding:6px 12px;border-radius:12px;background:#15596a;color:#fff;font:800 13px/1.2 'Fredoka',system-ui,sans-serif;text-align:center}}
+
+/* Keep the live status inside the game frame so it cannot extend the page below the viewport. */
+.game-card > .statusbar{position:absolute;z-index:3;right:8px;bottom:8px;width:min(360px,28%);min-height:28px;margin:0;padding:5px 9px;transform:none}
+@media (max-width:600px) and (orientation:landscape){.game-card > .statusbar{position:static;width:auto;margin:6px;transform:none}}
+@media (max-width:700px) and (orientation:portrait){body:after{padding:7px 16px;border:2px solid #553516;border-radius:18px;background:linear-gradient(#F7F1E2,#FAE7D0 50%,#FBE5C6);box-shadow:0 6px 0 #A68563;color:#0B3760;font:800 13px/1.2 'Fredoka',system-ui,sans-serif}}
