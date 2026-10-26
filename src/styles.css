@@ -36,283 +36,441 @@
 .picks button{background:#fff;color:#15596a;border-radius:12px;padding:10px 12px;font-weight:800;font-size:16px}
 .picks button.on{background:#15596a;color:#fff}
 
-/* Non-HUD screens. Fredoka is SIL OFL; see assets/fonts/OFL.txt. The in-game HUD keeps the page font. */
+/* Non-HUD screens. Panels follow the art-director pill: radius 18, 2px #553516,
+   cream #F7F1E2 → #FAE7D0 → #FBE5C6, and a 6px lip. Display is Lilita One.
+   Body is Fredoka. The variable file's wght axis tops out at 700, so a request
+   for 800 clamps to 700 instead of synthesizing a bold. HUD rules above stay put. */
 @font-face {
-  font-family: "Fredoka";
+  font-family: "Lilita One";
   font-style: normal;
-  font-weight: 500 700;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/LilitaOne-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: Fredoka;
+  font-style: normal;
+  font-weight: 700 800;
   font-display: swap;
   src: url("../assets/fonts/Fredoka-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 .overlay {
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  align-items: safe center;
+  justify-content: safe center;
   overflow: auto;
-  padding: 28px 16px;
-  background: rgba(8, 90, 110, 0.42);
-  backdrop-filter: blur(3px);
-  font-family: "Fredoka", "Trebuchet MS", "Nunito", system-ui, sans-serif;
-  font-weight: 560;
-  color: #244d53;
+  padding: 28px 18px;
+  background: rgba(1, 50, 79, 0.46);
+  color: #0B3760;
+  font-family: Fredoka, system-ui, sans-serif;
+  font-weight: 700;
 }
 .overlay .dialog.screen {
-  --pad: 26px;
-  width: min(560px, 100%);
-  margin: auto;
-  padding: var(--pad);
+  width: min(720px, 100%);
+  margin: 8px auto;
+  padding: 22px 22px 26px;
   text-align: center;
-  color: #244d53;
-  background:
-    radial-gradient(circle at 100% 0%, rgba(244, 119, 105, 0.16), transparent 28%),
-    radial-gradient(circle at 0% 100%, rgba(85, 201, 199, 0.2), transparent 30%),
-    linear-gradient(180deg, #fffaf0 0%, #fff1d4 100%);
-  border: 3px solid #fff;
-  border-radius: 32px;
+  color: #0B3760;
+  background: linear-gradient(180deg, #F7F1E2 0%, #FAE7D0 50%, #FBE5C6 100%);
+  border: 2px solid #553516;
+  border-radius: 18px;
   box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.7),
-    0 18px 46px rgba(18, 63, 73, 0.28),
-    0 5px 0 #e4c48a;
+    0 3px 0 #BD9472,
+    0 6px 0 #A68563,
+    0 12px 18px rgba(34, 29, 11, 0.22);
 }
-.overlay .dialog.screen-menu { width: min(640px, 100%); }
+.overlay .dialog.screen-menu,
 .overlay .dialog.screen-summary { width: min(640px, 100%); }
-.overlay .dialog.screen-shop { width: min(760px, 100%); }
-.overlay .dialog.screen-pause { width: min(420px, 100%); }
-.overlay .dialog.screen-menu {
-  background:
-    radial-gradient(circle at 100% 0%, rgba(255, 196, 87, 0.28), transparent 24%),
-    linear-gradient(180deg, #086c84 0 206px, #8fd4e4 206px 222px, #fff6e4 222px);
-}
+.overlay .dialog.screen-shop { width: min(780px, 100%); }
+.overlay .dialog.screen-pause { width: min(440px, 100%); }
 .overlay .dialog.screen h1 {
-  margin: 0 0 8px;
-  color: #244d53;
-  font-size: 34px;
-  font-weight: 700;
+  margin: 2px 0 8px;
+  font-family: "Lilita One", Fredoka, system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 36px;
   line-height: 1.05;
+  color: #0B3760;
 }
-.overlay .dialog.screen p { margin: 0 0 12px; color: #3e6468; line-height: 1.45; }
-.overlay .dialog.screen .eyebrow {
-  margin: 0 0 6px;
-  color: #8a4b12;
-  font-size: 13px;
+.overlay .dialog.screen p,
+.overlay .dialog.screen .lede,
+.overlay .dialog.screen .small-note {
+  margin: 8px 0;
+  color: #0B3760;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  line-height: 1.45;
+}
+.overlay .dialog.screen .small-note { font-size: 13px; }
+.overlay .dialog.screen .eyebrow {
+  margin: 0 0 4px;
+  color: #844D27;
+  font-family: Fredoka, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-}
-.overlay .crest { margin-bottom: 8px; }
-.overlay .screen-menu .eyebrow span {
-  display: inline-block;
-  padding: 4px 12px;
-  border-radius: 999px;
-  background: rgba(255, 250, 240, 0.92);
-  color: #8a4b12;
-}
-.overlay .sun {
-  width: 62px;
-  height: 62px;
-  margin: 0 auto 8px;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 50% 50%, #fff6c2 0 16px, #ffd34a 17px 24px, transparent 25px),
-    repeating-conic-gradient(from 8deg, #ffcc3d 0 14deg, transparent 14deg 32deg);
-  filter: drop-shadow(0 5px 0 #d9892a);
 }
 .overlay .sr-only {
   position: absolute;
   width: 1px;
   height: 1px;
-  margin: -1px;
   padding: 0;
+  margin: -1px;
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
 }
-.overlay .dialog.screen h1.wordmark {
+.overlay .dialog.screen .crest {
   position: relative;
-  margin: 0;
-  color: #fffdf8;
-  font-size: 60px;
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  line-height: 0.92;
-  text-shadow: 0 4px 0 #06485a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 0 auto 16px;
+  padding: 18px 16px 18px;
+  border: 2px solid #553516;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #B96A2C 0%, #844D27 45%, #5A3319 100%);
+  box-shadow: 0 6px 0 #5A3319;
 }
-.overlay .dialog.screen h1.wordmark span { color: #ffe56a; }
-.overlay .lede { font-size: 16px; }
-.overlay .shift-name { margin: -2px 0 8px; color: #0a6174; font-size: 15px; font-weight: 700; }
-.overlay .service-preview { display: flex; justify-content: center; gap: 10px; margin: 0 0 14px; }
-.overlay .service-preview span {
-  display: grid;
-  place-items: center;
+.overlay .dialog.screen .sun {
   width: 64px;
   height: 64px;
-  border-radius: 18px;
-  background: #fff;
-  box-shadow: 0 5px 0 #ead7b0, 0 10px 16px rgba(36, 77, 83, 0.08);
+  border: 2px solid #553516;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 32%, #FDD83B 0%, #FCC93D 55%, #F5B137 100%);
+  box-shadow: 0 3px 0 #5A3319;
 }
-.overlay .service-preview img { width: 40px; height: 40px; object-fit: contain; }
-.overlay .level-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin: 0 0 14px; }
-.overlay .level-tile {
-  min-height: 64px;
-  padding: 8px 2px;
-  border: 2px solid #fff;
-  border-radius: 16px;
-  background: #fff;
-  color: #244d53;
-  font-size: 14px;
-  font-weight: 700;
-  box-shadow: 0 4px 0 #ead7b0;
+.overlay .dialog.screen .crest .eyebrow span {
+  display: inline-block;
+  margin: 0;
+  padding: 5px 12px 7px;
+  border: 2px solid #553516;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #F7F1E2 0%, #FAE7D0 50%, #FBE5C6 100%);
+  box-shadow: 0 3px 0 #BD9472, 0 6px 0 #A68563;
+  color: #0B3760;
+  font-family: Fredoka, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+.overlay .dialog.screen h1.wordmark {
+  margin: 2px 0 0;
+  color: #F7EFE3;
+  font-family: "Lilita One", Fredoka, system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 56px;
+  line-height: 0.95;
+  text-shadow:
+    -3px 0 0 #01324F,
+    3px 0 0 #01324F,
+    0 -3px 0 #01324F,
+    0 3px 0 #01324F,
+    -2px -2px 0 #01324F,
+    2px -2px 0 #01324F,
+    -2px 2px 0 #01324F,
+    2px 2px 0 #01324F,
+    0 4px 0 #221D0B;
+}
+.overlay .dialog.screen h1.wordmark span { color: #FCC93D; }
+.overlay .dialog.screen .service-preview {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 12px 0;
+}
+.overlay .dialog.screen .service-preview span {
+  display: grid;
+  place-items: center;
+  width: 68px;
+  height: 68px;
+  border: 2px solid #553516;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #F7F1E2 0%, #FAE7D0 50%, #FBE5C6 100%);
+  box-shadow: 0 3px 0 #BD9472, 0 6px 0 #A68563;
+}
+.overlay .dialog.screen .service-preview img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+.overlay .dialog.screen .level-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  margin: 14px 0 8px;
+}
+.overlay .dialog.screen .level-tile {
+  min-width: 0;
+  padding: 10px 4px 12px;
+  border: 2px solid #553516;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #F7F1E2 0%, #FAE7D0 50%, #FBE5C6 100%);
+  box-shadow: 0 3px 0 #BD9472, 0 6px 0 #A68563;
+  color: #0B3760;
+  font-family: Fredoka, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 16px;
   opacity: 1;
 }
-.overlay button.level-tile { width: 100%; }
-.overlay button.level-tile:hover { transform: translateY(-1px); }
-.overlay .level-tile.open { color: #0a6174; }
-.overlay .level-tile.locked { background: #f6ead4; color: #6b5340; box-shadow: 0 4px 0 #e2d0b0; }
-.overlay .level-tile span { display: block; margin-top: 2px; color: #8a5a10; font-family: system-ui, sans-serif; font-size: 12px; letter-spacing: 0.06em; }
-.overlay .balance {
+.overlay .dialog.screen .level-tile span {
+  display: block;
+  margin-top: 4px;
+  color: #844D27;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+.overlay .dialog.screen .level-tile.locked,
+.overlay .dialog.screen .level-tile:disabled {
+  background: #F1C381;
+  color: #5A3319;
+  opacity: 1;
+  cursor: default;
+}
+.overlay .dialog.screen .level-tile.locked span,
+.overlay .dialog.screen .level-tile:disabled span { color: #5A3319; }
+.overlay .dialog.screen .balance {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin: 0 0 12px;
-  padding: 7px 14px 7px 8px;
-  border-radius: 999px;
-  background: #fff;
-  color: #244d53;
-  font-size: 15px;
-  font-weight: 700;
-  box-shadow: 0 6px 16px rgba(36, 77, 83, 0.1);
-}
-.overlay .coin, .overlay .coin-ico {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #fff4b8, #f5bd43 58%, #e09a1a);
-  box-shadow: inset 0 -2px 0 #c48412, 0 2px 0 #c48412;
-}
-.overlay .coin-ico { width: 28px; height: 28px; }
-.overlay .button-stack { display: grid; gap: 8px; margin-top: 4px; }
-.overlay .button-row { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 0; }
-.overlay .button-row > button { flex: 1 1 140px; }
-.overlay .dialog.screen .primary,
-.overlay .dialog.screen .secondary,
-.overlay .dialog.screen .upgrade {
-  font-weight: 700;
+  margin: 10px auto 4px;
+  padding: 8px 14px 10px;
+  border: 2px solid #553516;
   border-radius: 18px;
+  background: linear-gradient(180deg, #F7F1E2 0%, #FAE7D0 50%, #FBE5C6 100%);
+  box-shadow: 0 3px 0 #BD9472, 0 6px 0 #A68563;
+  color: #0B3760;
+  font-weight: 800;
 }
-.overlay .dialog.screen .primary {
-  min-height: 52px;
-  padding: 12px 18px;
-  background: linear-gradient(180deg, #ffe58a 0%, #f5bd43 70%, #f0b02a 100%);
-  color: #244d53;
-  font-size: 18px;
-  box-shadow: 0 5px 0 #c98416, 0 12px 18px rgba(201, 132, 22, 0.22);
-}
-.overlay .dialog.screen .secondary {
-  min-height: 48px;
-  padding: 10px 14px;
-  border: 2px solid #d7eef2;
-  background: #fff;
-  color: #0a6174;
-  font-size: 16px;
-  box-shadow: 0 4px 0 #d5e4ea;
-}
-.overlay .dialog.screen .primary:hover,
-.overlay .dialog.screen .secondary:hover,
-.overlay .dialog.screen .upgrade:hover { filter: brightness(1.03); }
-.overlay .dialog.screen .primary:active { transform: translateY(3px); box-shadow: 0 2px 0 #c98416; }
-.overlay .dialog.screen .secondary:active { transform: translateY(2px); box-shadow: 0 2px 0 #d5e4ea; }
-.overlay .pause-mark {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  width: 68px;
-  height: 68px;
-  margin: 0 auto 10px;
+.overlay .coin,
+.overlay .coin-ico {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #553516;
   border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 6px 0 #ead7b0, 0 12px 18px rgba(36, 77, 83, 0.08);
+  background: radial-gradient(circle at 35% 35%, #FDD83B, #F5B137);
+  vertical-align: -3px;
 }
-.overlay .pause-mark i { display: block; width: 7px; height: 22px; border-radius: 99px; background: #087f9b; }
-.overlay .stars {
-  margin: 2px 0 10px;
-  color: #8a5a10;
-  font-family: system-ui, sans-serif;
-  font-size: 34px;
-  font-weight: 700;
-  letter-spacing: 4px;
-  line-height: 1;
+.overlay .dialog.screen .shift-name {
+  margin: 0;
+  color: #085183;
+  font-weight: 800;
 }
-.overlay .stat-pills { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 0 0 12px; }
-.overlay .stat-pill {
+.overlay .dialog.screen .stars {
+  margin: 6px 0 10px;
+  color: #844D27;
+  font-size: 36px;
+  letter-spacing: 6px;
+}
+.overlay .dialog.screen .stat-pills {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 12px 0;
+}
+.overlay .dialog.screen .stat-pill {
   display: flex;
   align-items: center;
   gap: 8px;
-  min-height: 48px;
-  padding: 6px 14px 6px 6px;
-  border-radius: 999px;
-  background: #fff;
-  box-shadow: 0 6px 16px rgba(36, 77, 83, 0.1);
+  padding: 8px 10px 10px;
+  border: 2px solid #553516;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #F7F1E2 0%, #FAE7D0 50%, #FBE5C6 100%);
+  box-shadow: 0 3px 0 #BD9472, 0 6px 0 #A68563;
+  text-align: left;
 }
-.overlay .pill-ico {
+.overlay .dialog.screen .stat-pill small {
+  display: block;
+  color: #844D27;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.overlay .dialog.screen .stat-pill strong {
+  display: block;
+  color: #0B3760;
+  font-size: 16px;
+  font-weight: 800;
+}
+.overlay .dialog.screen .pill-ico {
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  background: #e7f7f4;
-  color: #0a6174;
-  font-size: 14px;
+  background: #844D27;
+  color: #F7F1E2;
+  font-size: 13px;
+  font-weight: 800;
+}
+.overlay .dialog.screen .rule {
+  margin: 8px 0;
+  padding: 10px 12px 12px;
+  border: 2px solid #553516;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #F7F1E2 0%, #FAE7D0 50%, #FBE5C6 100%);
+  box-shadow: 0 3px 0 #BD9472, 0 6px 0 #A68563;
   font-weight: 700;
 }
-.overlay .stat-pill small { display: block; color: #3e6468; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
-.overlay .stat-pill strong { color: #244d53; font-size: 16px; }
-.overlay .rule {
-  margin: 0 0 10px;
-  padding: 10px 12px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.74);
-  color: #3e6468;
-  font-size: 14px;
+.overlay .dialog.screen .button-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 16px;
 }
-.overlay .small-note { color: #3e6468 !important; font-size: 13px !important; }
-.overlay .shop-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; margin: 0 0 12px; }
-.overlay .dialog.screen .upgrade {
+.overlay .dialog.screen .button-row {
   display: grid;
-  grid-template-columns: 56px 1fr;
-  grid-template-areas: "art name" "art effect" "cost cost";
-  gap: 2px 10px;
-  align-items: center;
-  width: 100%;
-  min-width: 0;
-  padding: 12px;
-  border: 2px solid #fff;
-  background: #fff;
-  color: #244d53;
-  text-align: left;
-  box-shadow: 0 5px 0 #ead7b0, 0 10px 16px rgba(36, 77, 83, 0.06);
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin: 16px 0 0;
 }
-.overlay .upgrade-art { grid-area: art; display: grid; place-items: center; width: 56px; height: 56px; border-radius: 16px; background: #e7f7f4; overflow: hidden; }
-.overlay .upgrade-art img { width: 46px; height: 46px; object-fit: contain; }
-.overlay .upgrade-name { grid-area: name; font-size: 15px; }
-.overlay .upgrade-effect { grid-area: effect; color: #3e6468; font-size: 13px; font-weight: 560; }
-.overlay .upgrade-cost { grid-area: cost; justify-self: start; margin-top: 6px; padding: 4px 10px; border-radius: 999px; background: #fff4cc; color: #7a4e0d; font-size: 13px; }
-.overlay .upgrade.is-short .upgrade-cost { background: #f8e4df; color: #7a342c; }
-.overlay .upgrade.is-short { box-shadow: 0 5px 0 #e7d3cc, 0 10px 16px rgba(36, 77, 83, 0.05); }
+.overlay .dialog.screen .button-stack > .primary,
+.overlay .dialog.screen .button-stack > .secondary { width: 100%; }
+.overlay .dialog.screen .primary,
+.overlay .dialog.screen .secondary,
+.overlay .dialog.screen .upgrade {
+  min-width: 0;
+  padding: 12px 16px;
+  border: 2px solid #553516;
+  border-radius: 18px;
+  color: #0B3760;
+  font-family: Fredoka, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 1.2;
+}
+.overlay .dialog.screen .primary {
+  background: linear-gradient(180deg, #FDD83B 0%, #FCC93D 55%, #F5B137 100%);
+  box-shadow: 0 3px 0 #BD9472, 0 6px 0 #A68563;
+}
+.overlay .dialog.screen .secondary,
+.overlay .dialog.screen .upgrade {
+  background: linear-gradient(180deg, #F7F1E2 0%, #FAE7D0 50%, #FBE5C6 100%);
+  box-shadow: 0 3px 0 #BD9472, 0 6px 0 #A68563;
+}
+.overlay .dialog.screen .primary:active,
+.overlay .dialog.screen .secondary:active,
+.overlay .dialog.screen .upgrade:active,
+.overlay .dialog.screen .level-tile:not(:disabled):active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #A68563;
+}
+.overlay .dialog.screen .shop-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 14px;
+  margin: 14px 0 4px;
+}
+.overlay .dialog.screen .upgrade {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 12px 16px;
+}
+.overlay .dialog.screen .upgrade-art {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+}
+.overlay .dialog.screen .upgrade-art img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+}
+.overlay .dialog.screen .upgrade-name { font-size: 16px; font-weight: 800; }
+.overlay .dialog.screen .upgrade-effect {
+  color: #085183;
+  font-size: 13px;
+  font-weight: 700;
+}
+.overlay .dialog.screen .upgrade-cost {
+  margin-top: 6px;
+  padding: 4px 10px 6px;
+  border: 2px solid #553516;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #FDD83B, #F5B137);
+  box-shadow: 0 3px 0 #BD9472, 0 6px 0 #A68563;
+  color: #0B3760;
+  font-weight: 800;
+}
+.overlay .dialog.screen .upgrade.is-short .upgrade-cost {
+  background: #F4789D;
+  color: #0B3760;
+}
+.overlay .dialog.screen .pause-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 76px;
+  height: 76px;
+  margin: 2px auto 12px;
+  border: 6px solid #fff;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 25%, #51B0D3, #2089BB 55%, #157CAD);
+  box-shadow: inset 0 0 0 3px #085183, 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+.overlay .dialog.screen .pause-mark i {
+  display: block;
+  width: 8px;
+  height: 26px;
+  border-radius: 3px;
+  background: #fff;
+}
 @media (max-width: 640px) {
-  .overlay { padding: 12px; }
-  .overlay .dialog.screen { --pad: 16px; border-radius: 24px; }
-  .overlay .dialog.screen h1 { font-size: 28px; }
+  .overlay { padding: 16px 12px; }
+  .overlay .dialog.screen { padding: 16px 14px 18px; border-radius: 18px; }
+  .overlay .dialog.screen h1 { font-size: 30px; }
   .overlay .dialog.screen h1.wordmark { font-size: 44px; }
-  .overlay .dialog.screen-menu { background: linear-gradient(180deg, #086c84 0 176px, #8fd4e4 176px 190px, #fff6e4 190px); }
-  .overlay .button-row { flex-direction: column; }
-  .overlay .shop-grid { grid-template-columns: 1fr; }
-  .overlay .level-tile { min-height: 56px; font-size: 13px; }
+  .overlay .dialog.screen .shop-grid,
+  .overlay .dialog.screen .button-row { grid-template-columns: 1fr; }
+  .overlay .dialog.screen .stat-pills { grid-template-columns: 1fr 1fr; }
+  .overlay .dialog.screen .level-tile { border-radius: 18px; font-size: 14px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .overlay .dialog.screen .primary:active,
   .overlay .dialog.screen .secondary:active,
-  .overlay button.level-tile:hover { transform: none; }
+  .overlay .dialog.screen .upgrade:active,
+  .overlay .dialog.screen .level-tile:not(:disabled):active { transform: none; }
+}
+
+.overlay .dialog.screen .level-grid.scrollable {
+  max-height: min(460px, 52vh);
+  overflow: auto;
+  padding: 4px 4px 12px;
+}
+.overlay .dialog.screen .level-tile.bonus:not(.locked):not(:disabled) {
+  background: linear-gradient(180deg, #FDD83B 0%, #FCC93D 55%, #F5B137 100%);
+}
+.overlay .dialog.screen .upgrade small {
+  display: block;
+  margin-top: 4px;
+  color: #085183;
+  font-size: 13px;
+  font-weight: 700;
+}
+.overlay .dialog.screen .primary:disabled {
+  background: #F1C381;
+  color: #5A3319;
+  cursor: default;
+  transform: none;
+}
+.overlay .dialog.screen .picks button {
+  border: 2px solid #553516;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #F7F1E2 0%, #FAE7D0 50%, #FBE5C6 100%);
+  box-shadow: 0 3px 0 #BD9472, 0 6px 0 #A68563;
+  color: #0B3760;
+  font-family: Fredoka, system-ui, sans-serif;
+  font-weight: 800;
+}
+.overlay .dialog.screen .picks button.on {
+  background: linear-gradient(180deg, #FDD83B 0%, #FCC93D 55%, #F5B137 100%);
+  color: #0B3760;
 }
