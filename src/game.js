@@ -104,7 +104,6 @@ class Popularity{
   static blocked(){return guests.filter(g=>g.state!=='leaving'&&g.state!=='gone').length>=beachCap}
   static gain(faces){if(faces<2)return '';popularity+=faces>=3?50:34;if(popularity<100||beachCap>=Popularity.maxCap()){if(beachCap>=Popularity.maxCap())popularity=Math.min(100,popularity);return ''}popularity-=100;beachCap++;return ` Beach holds ${beachCap}.`}
   static lose(){const before=beachCap;popularity-=100;while(popularity<0&&beachCap>Popularity.minCap()){beachCap--;popularity+=100}if(popularity<0)popularity=0;return beachCap<before?` The beach now holds ${beachCap}.`:''}
-  static draw(){const x=318,y=14,w=324,h=18,p=Math.max(0,Math.min(1,popularity/100));ctx.save();ctx.fillStyle='#fffdf8ee';roundRect(x,y,w,h,8);ctx.fill();ctx.fillStyle='#7dcaa8';roundRect(x,y,Math.max(8,w*p),h,8);ctx.fill();ctx.strokeStyle='#15596a';ctx.lineWidth=1.5;roundRect(x,y,w,h,8);ctx.stroke();ctx.fillStyle='#15596a';ctx.font='800 11px Nunito,sans-serif';ctx.textAlign='center';ctx.fillText(`POP ${Math.round(popularity)}  ·  BEACH ${beachCap}`,x+w/2,y+13);ctx.restore()}
 }
 class GuestTypes{
   static kind(id){return guestKinds[id|0]||guestKinds[0]}
