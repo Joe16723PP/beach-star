@@ -54,8 +54,8 @@
 @media (max-width:700px) and (orientation:portrait){body{min-height:100dvh;display:flex;flex-direction:column;justify-content:center;overflow-x:hidden}.shell{width:100vw;max-width:none}body:after{content:"Rotate your device for a bigger beach";display:block;margin:12px auto 0;padding:6px 12px;border-radius:12px;background:#15596a;color:#fff;font:800 13px/1.2 'Fredoka',system-ui,sans-serif;text-align:center}}
 
 /* Keep the live status inside the game frame so it cannot extend the page below the viewport. */
-.game-card > .statusbar{position:absolute;z-index:3;right:8px;bottom:8px;width:min(360px,28%);min-height:28px;margin:0;padding:5px 9px;transform:none}
-@media (max-width:600px) and (orientation:landscape){.game-card > .statusbar{position:static;width:auto;margin:6px;transform:none}}
+.canvas-wrap > .statusbar{position:absolute;z-index:3;right:8px;bottom:8px;width:min(360px,28%);min-height:28px;margin:0;padding:5px 9px;transform:none}
+@media (max-width:600px) and (orientation:landscape){.canvas-wrap > .statusbar{position:static;width:auto;margin:6px;transform:none}}
 @media (max-width:700px) and (orientation:portrait){body:after{padding:7px 16px;border:2px solid #553516;border-radius:18px;background:linear-gradient(#F7F1E2,#FAE7D0 50%,#FBE5C6);box-shadow:0 6px 0 #A68563;color:#0B3760;font:800 13px/1.2 'Fredoka',system-ui,sans-serif}}
 
 /* Keep short landscape viewports fixed to the game frame without page scrolling. */
@@ -64,7 +64,7 @@
   .shell { width: 100vw; height: 100dvh; min-height: 0; padding: 0; margin: 0; }
   .game-card { width: 100%; height: 100%; min-height: 0; }
   .canvas-wrap { width: 100%; height: 100%; min-height: 0; }
-  .game-card > .statusbar { position: absolute; right: 6px; bottom: 6px; width: min(300px, 40%); margin: 0; }
+  .canvas-wrap > .statusbar { position: absolute; right: 6px; bottom: 6px; width: min(300px, 40%); margin: 0; }
 }
 
 /* Keep HUD text legible when the canvas is scaled down on narrow phones. */
@@ -73,4 +73,54 @@
   .hud-service b { font-size: max(12px, calc(18 * var(--u))); }
   .hud-hint { font-size: max(12px, calc(20 * var(--u))); }
   .shift-copy small, .shift-copy strong, .shift-progress { font-size: max(12px, calc(10 * var(--u))); }
+}
+
+/* Fit the 16:9 playfield and all canvas anchored HUD elements in short landscape viewports. */
+@media (orientation: landscape) and (max-height: 520px) {
+  .canvas-wrap {
+    position: relative;
+    width: min(100vw, calc(100dvh * 16 / 9));
+    height: min(100dvh, calc(100vw * 9 / 16));
+    min-height: 0;
+    margin: 0 auto;
+    container-type: inline-size;
+  }
+  .canvas-wrap canvas {
+    width: min(100vw, calc(100dvh * 16 / 9));
+    height: min(100dvh, calc(100vw * 9 / 16));
+    margin: 0 auto;
+  }
+  .canvas-wrap .statusbar {
+    position: absolute;
+    left: calc(589 * var(--u) + 502 * var(--u) + 8px);
+    right: auto;
+    bottom: 6px;
+    width: min(300px, calc(34.75% - 14px));
+    margin: 0;
+    transform: none;
+  }
+}
+
+/* Keep the hint and status message clear of one another on compact screens. */
+@media (max-width: 600px) {
+  .canvas-wrap .statusbar { width: min(300px, calc(34.75% - 14px)); }
+  .hud-hint { width: max(calc(502 * var(--u)), 224px); white-space: nowrap; }
+  .hud-service b { font-size: max(10px, calc(18 * var(--u))); letter-spacing: 0; }
+}
+
+@media (max-width: 600px) and (orientation: portrait) {
+  .canvas-wrap .statusbar p, .toast { font-size: max(12px, calc(11 * var(--u))); }
+  .hud-hint {
+    width: auto;
+    max-width: calc(100% - 186px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .hud-service b { display: none; }
+}
+
+/* Compact screens: the hint's 224px minimum leaves no room beside it, so lift the status bar to sit just above the hint row. */
+@media (max-width: 600px) {
+  .canvas-wrap .statusbar { left: auto; right: 6px; bottom: calc(100% - 853 * var(--u) + 6px); }
 }
