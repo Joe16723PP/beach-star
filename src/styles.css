@@ -109,7 +109,6 @@
 }
 
 @media (max-width: 600px) and (orientation: portrait) {
-  .canvas-wrap .statusbar p, .toast { font-size: max(12px, calc(11 * var(--u))); }
   .hud-hint {
     width: auto;
     max-width: calc(100% - 186px);
@@ -124,3 +123,12 @@
 @media (max-width: 600px) {
   .canvas-wrap .statusbar { left: auto; right: 6px; bottom: calc(100% - 853 * var(--u) + 6px); }
 }
+
+.canvas-wrap > .statusbar{pointer-events:none;}
+@media (orientation:landscape) and (max-height:520px){
+  .hud-hint{font-size:max(12px,calc(20*var(--u)));width:max(calc(502*var(--u)),224px);white-space:nowrap;}
+  .hud-service b{font-size:max(10px,calc(18*var(--u)));letter-spacing:0;}
+  .canvas-wrap .statusbar{left:auto;right:6px;bottom:calc(100% - 853*var(--u) + 6px);}
+  .canvas-wrap .statusbar p{font-size:12px;}
+}
+@media (max-width:600px){.canvas-wrap .statusbar p,.toast{font-size:max(12px,calc(11*var(--u)));}}
