@@ -71,7 +71,7 @@
   color: #0B3760;
   font-family: Fredoka, system-ui, sans-serif;
   font-weight: 700;
-  font-size: calc(16 * var(--u));
+  font-size: max(16px, calc(16 * var(--u)));
 }
 .overlay .dialog.screen {
   width: min(calc(720 * var(--u)), 100%);
@@ -103,7 +103,7 @@
   margin: calc(8 * var(--u)) 0;
   color: #0B3760;
   font-weight: 700;
-  font-size: calc(16 * var(--u));
+  font-size: max(16px, calc(16 * var(--u)));
   line-height: 1.45;
 }
 .overlay .dialog.screen .eyebrow {
@@ -111,13 +111,13 @@
   color: #844D27;
   font-family: Fredoka, system-ui, sans-serif;
   font-weight: 800;
-  font-size: calc(12 * var(--u));
+  font-size: max(11px, calc(13 * var(--u)));
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 .overlay .dialog.screen .small-note {
   color: #0B3760 !important;
-  font-size: calc(13 * var(--u)) !important;
+  font-size: max(11px, calc(13 * var(--u))) !important;
 }
 .overlay .dialog.screen .stars {
   margin: calc(6 * var(--u)) 0 calc(10 * var(--u));
@@ -158,7 +158,7 @@
   color: #0B3760;
   font-family: Fredoka, system-ui, sans-serif;
   font-weight: 800;
-  font-size: calc(16 * var(--u));
+  font-size: max(16px, calc(16 * var(--u)));
   line-height: 1.2;
 }
 .overlay .dialog.screen button:active:not(:disabled) {
@@ -172,7 +172,7 @@
   display: block;
   margin-top: calc(4 * var(--u));
   color: #844D27;
-  font-size: calc(12 * var(--u));
+  font-size: max(11px, calc(12 * var(--u)));
   letter-spacing: calc(1 * var(--u));
 }
 .overlay .dialog.screen button.level-tile.locked,
@@ -197,7 +197,7 @@
   display: block;
   margin-top: calc(4 * var(--u));
   color: #085183;
-  font-size: calc(13 * var(--u));
+  font-size: max(11px, calc(13 * var(--u)));
   font-weight: 700;
 }
 .overlay .dialog.screen button.primary:disabled {
