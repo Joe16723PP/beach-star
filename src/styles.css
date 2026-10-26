@@ -132,3 +132,4 @@
   .canvas-wrap .statusbar p{font-size:12px;}
 }
 @media (max-width:600px){.canvas-wrap .statusbar p,.toast{font-size:max(12px,calc(11*var(--u)));}}
+@media (orientation:landscape) and (max-height:520px) and (min-width:601px){ .canvas-wrap .statusbar{left:auto;right:6px;bottom:6px;width:calc(100% - 1300*var(--u) - 6px);} }
