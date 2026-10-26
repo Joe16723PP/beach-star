@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@700;800&family=Lilita+One&display=swap" rel="stylesheet">
   <meta name="theme-color" content="#daf4ef">
   <title>BeachStar — Beach Resort Manager</title>
   <link rel="stylesheet" href="src/styles.css">
@@ -17,17 +20,29 @@
         <div class="shift-progress"><span id="served">— / — visits</span><span class="progress-rail"><i id="goal-progress"></i></span></div>
       </div>
       <div class="hud" aria-live="polite">
-        <div class="hud-card stat-card"><span class="hud-icon">◷</span><span><small>TIME</small><strong><span id="time">—</span><small>s</small></strong></span></div>
-        <div class="hud-card stat-card"><span class="hud-icon">✦</span><span><small>COINS</small><strong id="coins">0</strong></span></div>
         <div class="hud-card stat-card"><span class="hud-icon">♡</span><span><small>MOOD</small><strong><span id="happy">100</span><small>%</small></strong></span></div>
-        <button id="pause" class="icon-button" type="button" aria-label="Pause game" title="Pause (P)" hidden>Ⅱ</button>
-        <button id="goals" class="icon-button" type="button" aria-label="Day goals" title="Day goals (G)" hidden>≡</button>
+        <button id="goals" class="icon-button" type="button" aria-label="Day goals" title="Day goals (G)" hidden>☰</button>
       </div>
     </header>
 
     <section class="game-card" aria-label="BeachStar game">
       <div class="canvas-wrap">
         <canvas id="stage" width="960" height="540" aria-label="Top-down beach resort. Move the owner, prepare orders at beach shops, then deliver them to guests."></canvas>
+        <div class="beach-hud" aria-label="Shift controls">
+          <a class="hud-brand" href="#home" aria-label="BeachStar home"><span class="hud-brand-sun">☀</span><span>BEACH<strong>STAR</strong></span><i>✿</i></a>
+          <div class="hud-stats" aria-live="polite">
+            <div class="hud-pill"><span class="stat-art stopwatch" aria-hidden="true">◴</span><strong id="time">—</strong></div>
+            <div class="hud-pill"><span class="stat-art coin-art" aria-hidden="true">$</span><strong id="coins">0</strong></div>
+            <div class="hud-pill"><span class="stat-art guests-art" aria-hidden="true">♟♟</span><strong id="guest-count">0/6</strong></div>
+          </div>
+          <button id="pause" class="hud-pause" type="button" aria-label="Pause game" title="Pause (P)" hidden><span></span><span></span></button>
+          <div class="hud-services" role="group" aria-label="Choose a service">
+            <button class="hud-service selected" type="button" data-hud-service="drink" aria-pressed="true"><img src="assets/game/ui-icons/icon-request-drink.png" alt=""><b>DRINK</b><kbd>1</kbd></button>
+            <button class="hud-service" type="button" data-hud-service="snack" aria-pressed="false"><img src="assets/game/ui-icons/icon-request-snack.png" alt=""><b>SNACK</b><kbd>2</kbd></button>
+            <button class="hud-service" type="button" data-hud-service="float" aria-pressed="false"><img src="assets/game/ui-icons/icon-request-float.png" alt=""><b>FLOAT</b><kbd>3</kbd></button>
+          </div>
+          <div class="hud-hint"><span>›</span> Choose a service, then tap a guest <span>‹</span></div>
+        </div>
       </div>
       <div class="carry-status" id="carry-status" aria-live="polite">Hands free · carry 2</div>
       <div class="statusbar"><div class="status-dot"></div><p id="message" role="status" aria-live="polite">Welcome to BeachStar.</p><div id="combo" class="combo-badge" hidden></div></div>
