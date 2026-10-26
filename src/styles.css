@@ -252,3 +252,5 @@
     max-width: 100%;
   }
 }
+/* Master's kbd shorthand stays in the HUD block. This later rule is the 11px floor. */
+kbd { font:900 11px Nunito; }
