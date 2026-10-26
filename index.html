@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@700;800&family=Lilita+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700;800&family=Lilita+One&display=swap" rel="stylesheet">
   <meta name="theme-color" content="#daf4ef">
   <title>BeachStar — Beach Resort Manager</title>
   <link rel="stylesheet" href="src/styles.css">
@@ -29,11 +29,11 @@
       <div class="canvas-wrap">
         <canvas id="stage" width="960" height="540" aria-label="Top-down beach resort. Move the owner, prepare orders at beach shops, then deliver them to guests."></canvas>
         <div class="beach-hud" aria-label="Shift controls">
-          <a class="hud-brand" href="#home" aria-label="BeachStar home"><span class="hud-brand-sun">☀</span><span>BEACH<strong>STAR</strong></span><i>✿</i></a>
+          <a class="hud-brand" href="#home" aria-label="BeachStar home"><span class="hud-brand-sun" aria-hidden="true"></span><span class="brand-word">BEACH<strong>STAR</strong></span><i aria-hidden="true">✿</i><svg class="brand-palm" viewBox="0 0 60 80" aria-hidden="true"><path d="M27 78Q36 43 30 17" fill="none" stroke="#75421f" stroke-width="5"/><path d="M30 18Q8 12 4 4Q22 4 31 14Q29 3 34 0Q41 9 35 17Q46 6 58 8Q52 20 36 21Q49 22 55 33Q41 34 33 24Q36 39 29 42Q22 33 30 20" fill="#337c54" stroke="#1c603d" stroke-width="2"/></svg></a>
           <div class="hud-stats" aria-live="polite">
-            <div class="hud-pill"><span class="stat-art stopwatch" aria-hidden="true">◴</span><strong id="time">—</strong></div>
-            <div class="hud-pill"><span class="stat-art coin-art" aria-hidden="true">$</span><strong id="coins">0</strong></div>
-            <div class="hud-pill"><span class="stat-art guests-art" aria-hidden="true">♟♟</span><strong id="guest-count">0/6</strong></div>
+            <div class="hud-pill"><svg class="stat-art ui-icon-timer" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="22" r="14" fill="#eaf7f8" stroke="#0b739e" stroke-width="3"/><path d="M17 3h6M20 8v3M20 22l7-6" fill="none" stroke="#0b739e" stroke-width="3" stroke-linecap="round"/><path d="M10 10l-3-3" stroke="#0b739e" stroke-width="3" stroke-linecap="round"/></svg><strong id="time">—</strong></div>
+            <div class="hud-pill"><svg class="stat-art ui-icon-coin" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17" fill="#F5B137"/><circle cx="20" cy="20" r="13" fill="#FDD83B" stroke="#EAA52A" stroke-width="2"/><path d="M23.5 13.5c-1-2-8-2-8 1 0 5 10 2 10 7 0 4-7 5-11 2M20 10v20" fill="none" stroke="#b57917" stroke-width="2" stroke-linecap="round"/></svg><strong id="coins">0</strong></div>
+            <div class="hud-pill"><svg class="stat-art ui-icon-guests" viewBox="0 0 40 40" aria-hidden="true"><circle cx="14" cy="13" r="6" fill="#54acd0"/><circle cx="27" cy="13" r="6" fill="#267fae"/><path d="M3 33c0-8 4-12 11-12s11 4 11 12M17 33c0-8 4-12 10-12s10 4 10 12" fill="#68c1dc" stroke="#176e9c" stroke-width="2" stroke-linejoin="round"/></svg><strong id="guest-count">0/6</strong></div>
           </div>
           <button id="pause" class="hud-pause" type="button" aria-label="Pause game" title="Pause (P)" hidden><span></span><span></span></button>
           <div class="hud-services" role="group" aria-label="Choose a service">
