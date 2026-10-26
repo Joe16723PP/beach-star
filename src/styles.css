@@ -161,6 +161,15 @@
   font-size: max(16px, calc(16 * var(--u)));
   line-height: 1.2;
 }
+.overlay .dialog.screen button.primary:not(:disabled) {
+  background: linear-gradient(180deg, #FDD83B 0%, #FCC93D 55%, #F5B137 100%);
+  box-shadow:
+    0 calc(3 * var(--u)) 0 #BD9472,
+    0 calc(6 * var(--u)) 0 #A68563;
+}
+.overlay .dialog.screen button.primary:not(:disabled):active {
+  box-shadow: 0 calc(2 * var(--u)) 0 #A68563;
+}
 .overlay .dialog.screen button:active:not(:disabled) {
   transform: translateY(calc(4 * var(--u)));
   box-shadow: 0 calc(2 * var(--u)) 0 #8F989C;
