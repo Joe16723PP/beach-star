@@ -88,17 +88,15 @@
   text-align: center;
   color: #0B3760;
   background: linear-gradient(180deg, #F7F1E2 0%, #FAE7D0 50%, #FBE5C6 100%);
-  border: calc(2 * var(--u)) solid #553516;
+  border: max(2px, calc(2 * var(--u))) solid #553516;
   border-radius: calc(18 * var(--u));
-  box-shadow:
-    0 calc(3 * var(--u)) 0 #BD9472,
-    0 calc(6 * var(--u)) 0 #A68563;
+  box-shadow: 0 max(2px, calc(3 * var(--u))) 0 #BD9472, 0 max(4px, calc(6 * var(--u))) 0 #A68563;
 }
 .overlay .dialog.screen h1 {
   margin: calc(2 * var(--u)) 0 calc(8 * var(--u));
   font-family: "Lilita One", Fredoka, system-ui, sans-serif;
   font-weight: 400;
-  font-size: calc(36 * var(--u));
+  font-size: max(22px, calc(36 * var(--u)));
   line-height: 1.05;
   overflow-wrap: break-word;
   color: #0B3760;
@@ -126,19 +124,19 @@
 .overlay .dialog.screen .stars {
   margin: calc(6 * var(--u)) 0 calc(10 * var(--u));
   color: #844D27;
-  font-size: calc(36 * var(--u));
-  letter-spacing: calc(6 * var(--u));
+  font-size: max(22px, calc(36 * var(--u)));
+  letter-spacing: max(3px, calc(6 * var(--u)));
 }
 .overlay .dialog.screen .level-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: calc(12 * var(--u));
+  gap: max(6px, calc(12 * var(--u)));
   margin: calc(14 * var(--u)) 0 calc(8 * var(--u));
 }
 .overlay .dialog.screen .level-grid.scrollable {
-  max-height: min(calc(460 * var(--u)), 46dvh);
+  max-height: min(max(180px, calc(460 * var(--u))), 46dvh);
   overflow: auto;
-  padding: calc(4 * var(--u)) calc(4 * var(--u)) calc(12 * var(--u));
+  padding: max(4px, calc(4 * var(--u))) max(4px, calc(4 * var(--u))) max(8px, calc(12 * var(--u)));
 }
 .overlay .dialog.screen .button-row {
   display: grid;
@@ -160,10 +158,10 @@
   white-space: normal;
   overflow-wrap: break-word;
   padding: max(8px, calc(12 * var(--u))) max(10px, calc(16 * var(--u)));
-  border: calc(2 * var(--u)) solid #393827;
+  border: max(2px, calc(2 * var(--u))) solid #393827;
   border-radius: calc(18 * var(--u));
   background: linear-gradient(180deg, #fff 0%, #FCF5E8 20%, #F9EBDB 100%);
-  box-shadow: 0 calc(6 * var(--u)) 0 #8F989C;
+  box-shadow: 0 max(4px, calc(6 * var(--u))) 0 #8F989C;
   color: #0B3760;
   font-family: Fredoka, system-ui, sans-serif;
   font-weight: 800;
@@ -172,16 +170,14 @@
 }
 .overlay .dialog.screen button.primary:not(:disabled) {
   background: linear-gradient(180deg, #FDD83B 0%, #FCC93D 55%, #F5B137 100%);
-  box-shadow:
-    0 calc(3 * var(--u)) 0 #BD9472,
-    0 calc(6 * var(--u)) 0 #A68563;
+  box-shadow: 0 max(2px, calc(3 * var(--u))) 0 #BD9472, 0 max(4px, calc(6 * var(--u))) 0 #A68563;
 }
 .overlay .dialog.screen button.primary:not(:disabled):active {
-  box-shadow: 0 calc(2 * var(--u)) 0 #A68563;
+  box-shadow: 0 max(2px, calc(2 * var(--u))) 0 #A68563;
 }
 .overlay .dialog.screen button:active:not(:disabled) {
-  transform: translateY(calc(4 * var(--u)));
-  box-shadow: 0 calc(2 * var(--u)) 0 #8F989C;
+  transform: translateY(max(2px, calc(4 * var(--u))));
+  box-shadow: 0 max(2px, calc(2 * var(--u))) 0 #8F989C;
 }
 .overlay .dialog.screen .level-tile {
   padding: calc(10 * var(--u)) calc(4 * var(--u)) calc(12 * var(--u));
