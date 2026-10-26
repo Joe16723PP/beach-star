@@ -33,5 +33,5 @@
 .meter .sweet{position:absolute;top:0;bottom:0;left:44%;width:12%;background:#7dcaa8aa}
 .meter .needle-mark{position:absolute;top:-4px;left:0;width:4px;height:44px;margin-left:-2px;background:#c45248;border-radius:2px}
 .picks{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:8px}
-.picks button{background:#fff;color:#15596a;border-radius:12px;padding:10px 12px;font-weight:800}
+.picks button{background:#fff;color:#15596a;border-radius:12px;padding:10px 12px;font-weight:800;font-size:16px}
 .picks button.on{background:#15596a;color:#fff}
