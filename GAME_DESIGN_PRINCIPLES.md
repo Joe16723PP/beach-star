@@ -36,8 +36,9 @@ These principles define the intended BeachStar gameplay. They incorporate the la
   - **Snack stand:** fruit or snack portions and serving plates/wrappers.
   - **Rental kiosk:** floats, umbrellas, and other rentable beach gear. Track available units and return/condition rules as rental inventory rather than edible ingredients.
 
-- Restocking is performed at the relevant shop or a clearly identified supply point. A refill action shows its input, time cost, refill amount, and remaining storage capacity before it starts.
-- Shop capacity is explicit: current amount, maximum amount, and refill amount are visible. Capacity upgrades change the maximum or refill batch and should be described as such.
+- Stock and refill are the same shop component. Do not render a row of per-ingredient circles (`coconut`, `ice`, `cup`, and so on) on the sand below a shop. Each shop has one stock pool and one tap.
+- The wooden plaque states whether the shop can serve or needs a refill (`READY TO PREP · 5/8`, `PREPARING...`, `ORDER READY (3)`, `LOW STOCK · TAP TO REFILL`, `REFILLING...`). A ready-stack badge sits on the counter. Names, amounts, and times stay in the status line.
+- A tap on the hut prepares when stock can cover the next batch, collects a ready order, or starts that shop's single refill when stock is empty. Capacity upgrades still change the maximum, and the status line states the new amount.
 - Refilling one shop must not silently refill every other shop. Later levels may add supply runs or shared storage only if those create understandable choices.
 
 ### 5. Character movement and animation
@@ -57,7 +58,7 @@ These principles define the intended BeachStar gameplay. They incorporate the la
 
 ## Review of the current prototype
 
-The browser prototype now has a visible queue, owner check-in, automatic lounger assignment, repeat visits, click/tap and keyboard movement, routed travel, and map-labeled shops. Orders must be prepared from each shop's own ingredients, collected into a one-item carry slot, and delivered to the matching guest. Shop-specific supplier refills use explicit quantities, time, and capacity limits; rental units return after the guest leaves. The first shift introduces check-in before its shift clock starts, then teaches the drink workflow. The drink, snack, rental, and future BBQ stands use a balanced two-by-two map layout with square 140×140 display footprints. The supply depot and delivery scooter remain nonfunctional scenery, and refills still start from each shop. The free-serving helper has been removed until it can use the same preparation and delivery rules. Browser playtesting is still required for movement, scene readability, timing, and responsive controls; see `GAME_IMPROVEMENT_CHECKLIST.md` section 7.
+The browser prototype now has a visible queue, owner check-in, automatic lounger assignment, repeat visits, click/tap and keyboard movement, routed travel, and map-labeled shops. Orders must be prepared from each shop's own stock pool, collected into a one-item carry slot, and delivered to the matching guest. Each open shop shows stock and ready state on its plaque and counter; a hut tap prepares, collects, or refills that shop. The status line states refill amount, time, and resulting stock. Rental units return after the guest leaves. The first shift introduces check-in before its shift clock starts, then teaches the drink workflow. The drink, snack, rental, and future BBQ stands use a balanced two-by-two map layout with square 140×140 display footprints. The supply depot and delivery scooter remain nonfunctional scenery. The free-serving helper has been removed until it can use the same preparation and delivery rules. Browser playtesting is still required for movement, scene readability, timing, and responsive controls; see `GAME_IMPROVEMENT_CHECKLIST.md` section 7.
 
 ## 1. Make the service loop easy to read
 

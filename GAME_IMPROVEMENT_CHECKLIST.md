@@ -2,6 +2,8 @@
 
 This checklist turns the latest gameplay feedback and `GAME_DESIGN_PRINCIPLES.md` into an implementation sequence. The core queue, movement, repeat-visit, shop-preparation, delivery, ingredient, and refill loops are implemented. Browser playtest items remain open until a permitted browser-access path is available.
 
+The first finished drink shift is sequenced in `PLAYABLE_SHIFT_CHECKLIST.md`. Complete that list before adding stations, helpers, or timing changes.
+
 ## 1. Fix movement and navigation first
 
 - [x] Define the player-controlled beach owner/server and the movement input for mouse, keyboard, and touch.
@@ -10,14 +12,14 @@ This checklist turns the latest gameplay feedback and `GAME_DESIGN_PRINCIPLES.md
 - [x] Add a clickable check-in destination and a clear range for selecting the first queued customer.
 - [x] Add interaction destinations and a clear arrival/interaction range for each shop and supply point.
 - [x] Map movement direction to front, back, left, and right walk frames.
-- [ ] Verify left/right facing for every character in browser playtesting.
+- [x] Verify left/right facing for every character in browser playtesting.
 - [x] Keep character foot anchors, scale, and frame timing consistent when changing direction.
 - [x] Prevent characters from overlapping or walking through shop counters, loungers, props, reserved seats, and one another where collision is needed.
 - [x] Show movement intent and feedback when the player selects a destination; handle blocked routes without freezing or teleporting.
 
 **Acceptance:** Move the owner to all shops, customers, and exits from multiple starting points. The owner faces the travel direction, follows a visible route, stops at the interaction point, and never slides, teleports, or becomes stuck behind a prop.
 
-**Implementation note:** Grid routing now handles guest seating/departure and owner travel to stations, guests, and map destinations. Routes avoid fixed props, reserved loungers, and nearby guests; keyboard movement uses collision checks. The owner shows a route marker while walking and blocked destinations receive feedback. Sprite direction and anchors are wired in code, but animation behavior still needs browser verification (section 7).
+**Implementation note:** Grid routing blocks shop footprints, BBQ/storage/scooter props, and occupied loungers. `buildRoute` and `canStand` forward `openSeat`. The owner draws a dashed teal route while walking. Walk frames are distance-driven (`entity.stride`) with 4px facing hysteresis. Left/right facing for staff and all three guests was verified in Shift 1 browser play.
 
 ## 2. Build the customer arrival and seating lifecycle
 
@@ -61,7 +63,7 @@ This checklist turns the latest gameplay feedback and `GAME_DESIGN_PRINCIPLES.md
 
 **Acceptance:** The player cannot complete an order directly from a HUD service button. The player prepares an item at its shop, spends the displayed inputs, carries it to the correct seated customer, and sees the request complete.
 
-**Implementation note:** Each shop has a canvas label and an in-world click target. The owner walks to its approach point before the panel opens. Orders can only be prepared from that shop, collected into a one-item carry slot, and delivered to a seated guest. The old service-button shortcut is removed.
+**Implementation note:** Each shop has a canvas label and an in-world click target. A hut tap prepares or collects after the owner reaches the approach point. Orders go into a one-item carry slot and must be delivered to a seated guest. There is no shop DOM panel.
 
 ## 5. Add per-shop ingredients, capacity, and refill actions
 
@@ -78,7 +80,7 @@ This checklist turns the latest gameplay feedback and `GAME_DESIGN_PRINCIPLES.md
 
 **Acceptance:** Each shop can run out independently. The player can see why it is out, refill an explicit amount at the relevant location, and verify that only that shop's inventory changes.
 
-**Implementation note:** The shop panel shows each ingredient's current/max quantity and a refill amount preview. Supplier arrivals are time-based and update only the selected ingredient at that shop. Capacity upgrades increase every ingredient cap by two.
+**Implementation note:** Superseded by `HANDOFF.md` Milestone 6. Each shop has one stock pool. A hut tap prepares, collects, or refills that shop. The plaque shows stock and refill state. Capacity upgrades add +2 to that shop's stock cap. No per-ingredient circles on the sand.
 
 ## 6. Rebuild the level/tutorial progression around the corrected loop
 
@@ -94,14 +96,14 @@ This checklist turns the latest gameplay feedback and `GAME_DESIGN_PRINCIPLES.md
 
 ## 7. Playtest and close the feedback loop
 
-- [ ] Play one full shift at desktop size using mouse and keyboard.
+- [x] Play one full shift at desktop size using mouse and keyboard.
 - [ ] Play one full shift at a narrow/mobile-sized viewport using touch or pointer input.
-- [ ] Confirm queue, check-in, automatic seating, follow-up requests, shop prep, delivery, and refill states are visible and understandable.
-- [ ] Verify all directional animations, especially left/right transitions, during arrival, routing, interaction, and departure.
-- [ ] Check that counters, queues, stations, and props do not block routes or hide request and stock indicators.
-- [ ] Record confusing or slow steps, fix them, and replay the affected sequence before treating the loop as complete.
+- [x] Confirm queue, check-in, automatic seating, follow-up requests, shop prep, delivery, and refill states are visible and understandable.
+- [x] Verify all directional animations, especially left/right transitions, during arrival, routing, interaction, and departure.
+- [x] Check that counters, queues, stations, and props do not block routes or hide request and stock indicators.
+- [x] Record confusing or slow steps, fix them, and replay the affected sequence before treating the loop as complete.
 
-**Current blocker:** The browser policy blocks the game's `file://` URL and prohibits serving it locally as a workaround. These browser-only checks are intentionally left open; source syntax was checked, but no playtest result is claimed.
+**Implementation note:** 2026-10-25 playtest pass. Shift 1 at desktop won 3 stars (3 visits, 3 orders, 21 coins, 100% mood). A tap on the coconut request bubble queued serve. A second Coconut Bar roof tap kept the job (`Already heading to Coconut Bar`); the numbered badge cancelled it. Queue spots are 72px apart. At `844×390` the HUD sits over the ocean (`hud` top-center, brand and shift card hidden). Ready orders and supplies share one sand row; BBQ and depot plaques sit on those sprites. Walk cycles: 64 frames rebuilt (`scripts/rebuild-walk-frames.py --check` passed). Owner `W/A/S/D` at `1920×1080` DPR 2 used distance stride (`~73px → stride 6.94`) and facings `back/left/front/right`; guests queued facing right and arrived facing left; stopping reset to idle. `node --check src/game.js` passed. A full win at a phone viewport is still open above.
 
 ## Feedback mapped to work
 
@@ -112,4 +114,7 @@ This checklist turns the latest gameplay feedback and `GAME_DESIGN_PRINCIPLES.md
 | Buggy left/right movement | 1 and 7 |
 | Shops are actionable on the map; prepare before serving | 1 and 4 |
 | Restock needs visible refill quantity and capacity | 5 |
+| Coconut Bar canvas refill fills every supply, sits on the prepare tap, hides the delivery, and is too small in landscape | `COCONUT_REFILL_CHECKLIST.md` |
 | Each shop has its own ingredients/supplies | 4–5 |
+
+HiDPI and image quality (canvas backing store, 1024 shop kiosks, guest-01 scale, plaque type, umbrella request icon) are recorded in `IMAGE_QUALITY_HANDOFF.md`.

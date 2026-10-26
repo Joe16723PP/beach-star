@@ -8,6 +8,8 @@
 - Guest 01's directional walk atlas was generated on 2026-10-24 using `assets/game/characters/guest-01.png` as its character reference. The original atlas is retained at `assets/source/guest-01-walk-atlas.png`; its 16 transparent frames are exported under `assets/game/characters/guest-01/walk/`.
 - Guest 02 and guest 03 each received a matching directional walk atlas on 2026-10-24, using their respective existing PNG as the character reference. The original atlases are retained under `assets/source/`; each atlas is split into 16 transparent frames under its matching `assets/game/characters/guest-0N/walk/` folder.
 - The server's directional walk atlas was generated on 2026-10-24 using `assets/game/characters/staff-server.png` as its character reference. The original atlas is retained at `assets/source/staff-walk-atlas.png`; its 16 transparent frames are exported under `assets/game/characters/staff/walk/`.
+- On 2026-10-25 the Coconut Bar, Fruit Shack, Beach Rentals, and BBQ received a distinct kiosk redesign guided by the user's Beach Party Craze screenshots. The new silhouettes use a round thatched drinks counter, a striped fruit stall, an elevated coral-roofed rental hut, and a terracotta-roofed grill. The references guide the cheerful painted beach-resort readability; the new objects are original designs. Generated source PNGs are retained in `assets/source/beachstar-bars-2026-10-25/`; fitted transparent 1024 × 1024 exports are used by the game. The prior prop files remain preserved.
+- On 2026-10-25 guest-01's idle PNG was scaled to match guest-02 / guest-03 body height. The uncropped original is at `assets/source/guest-01-idle-original.png`. A tight-framed umbrella request icon was exported to `assets/game/ui-icons/icon-request-umbrella.png`.
 - No external game assets, downloaded brushes, or third-party font files are included in this pack. The interface uses a system font.
 - These are generated raster PNGs, not layered Krita `.kra` documents. Keep this note with the source folder until Krita source files are authored.
 
@@ -34,12 +36,16 @@
 | `props/lounger-blue.png` | Blue-striped lounger | 1246 × 1263 | Transparent |
 | `props/lounger-yellow.png` | Yellow-striped lounger | 1246 × 1262 | Transparent |
 | `props/side-table-coconut.png` | Side table with coconut drink | 1295 × 1214 | Transparent |
+| `props/coconut-bar.png` | Distinct coconut drinks kiosk | 1024 × 1024 | Transparent |
+| `props/fruit-shack.png` | Striped fruit service stall | 1024 × 1024 | Transparent |
+| `props/beach-rentals.png` | Rental kiosk with swim gear display | 1024 × 1024 | Transparent |
+| `props/bbq-grill.png` | Open-air BBQ stand | 1024 × 1024 | Transparent |
 | `props/beach-ball.png` | Beach ball prop | 1312 × 1199 | Transparent |
-| `props/beach-tote.png` | Woven bag with towel | 1246 × 1263 | Transparent |
 | `ui-icons/icon-request-drink.png` | Coconut drink request/service icon | 1254 × 1254 | Transparent |
 | `ui-icons/icon-request-snack.png` | Watermelon snack request/service icon | 1403 × 1121 | Transparent |
 | `ui-icons/icon-request-float.png` | Swim float request/service icon | 1314 × 1197 | Transparent |
+| `ui-icons/icon-request-umbrella.png` | Shade umbrella request/service icon | 1254 × 1254 | Transparent |
 
 ## Browser use
 
-`index.html` scales the source PNGs into the 960 × 540 logical game view. The current files are larger than their display size and are not yet optimized 1× exports. Visual review in the integrated browser view remains pending; use `ASSET_CREATION_CHECKLIST.md` to track that review and future animation/Krita source work.
+`index.html` keeps a 960 × 540 logical game view. The canvas backing store scales with CSS size and `devicePixelRatio` (capped at 3× / 2880×1620). Shop kiosks are 1024 × 1024; character and icon art stays at source resolution for HiDPI.
