@@ -141,11 +141,11 @@ class BoothBuild{
 }
 class Warehouse{
   static caps(){return [2,4,6]}
-  static cap(){return Warehouse.caps()[Math.min(2,save.upgrades.warehouse|0)]}
+  static cap(){return Warehouse.caps()[Math.min(2,upRank('warehouse'))]}
   static open(){return level.number>=3}
   static serves(s){return !!(s&&s.id!=='rental'&&s.id!=='ride'&&(s.maxStock|0)>0)}
   static pipeline(){return stored+(trip?1:0)+queued+(haul?1:0)+crew.reduce((n,p)=>n+(p.haul?1:0),0)}
-  static seconds(){return (save.upgrades.scooter|0)>=1?2.6:4.5}
+  static seconds(){return upRank('scooter')>=1?2.6:4.5}
   static approach(){return {x:248,y:400}}
   static home(){return {x:173,y:432}}
   static label(){return stored&&!haul?'Pick up a supply crate':'Order supplies'}
@@ -156,20 +156,20 @@ class Warehouse{
   static arrive(){if(stored>0&&!haul){stored--;haul=true;say('Carrying a supply crate. Tap a booth to unload it.');syncHud();return}if(!Warehouse.order())return;say(`Supply order placed. The scooter takes ${Warehouse.seconds()}s.`)}
   static unload(s){if(!haul||!Warehouse.serves(s))return false;const room=(s.maxStock|0)-(s.stock|0);if(room<1){say(`${s.name} is already full.`);return false}const add=Math.min(3,room);s.stock+=add;haul=false;say(`Unloaded ${add} at ${s.name}. ${s.stock}/${s.maxStock}.`);syncHud();return true}
   static tick(dt){if(!trip)return;trip.timer-=dt;if(trip.timer>0)return;trip=null;stored++;say(`Supplies arrived. ${stored} crate${stored>1?'s':''} at the Supply Depot. Walk ${stored>1?'them':'it'} to a booth.`);Warehouse.pump()}
-  static offers(){const rows=[],rank=save.upgrades.warehouse|0;if(rank<2){const next=Warehouse.caps()[rank+1];rows.push(['warehouse','Depot hold',30+rank*20,`Hold ${Warehouse.cap()} → ${next}`])}if((save.upgrades.scooter|0)<1)rows.push(['scooter','Faster scooter',25,'Delivery 4.5s → 2.6s']);return rows}
-  static buy(id){if(id==='warehouse'){const rank=save.upgrades.warehouse|0;if(rank>=2){say('The Supply Depot already holds 6.');return}const cost=30+rank*20;if(save.coins<cost){say(`Need ${cost} coins for a bigger depot. You have ${save.coins}.`);return}save.coins-=cost;save.upgrades.warehouse=rank+1;persist();say(`Supply Depot now holds ${Warehouse.cap()}.`);syncHud();return}if((save.upgrades.scooter|0)>=1){say('The scooter is already as fast as it gets.');return}if(save.coins<25){say(`Need 25 coins for a faster scooter. You have ${save.coins}.`);return}save.coins-=25;save.upgrades.scooter=1;persist();say('Scooter deliveries now take 2.6s.');syncHud()}
+  static offers(){return UpgradeShop.offers().filter(r=>r[0]==='warehouse'||r[0]==='scooter')}
+  static buy(id){return UpgradeShop.buy(id)}
   static pos(){const home=Warehouse.home();if(!trip)return home;const u=1-trip.timer/trip.total,out=u<.5?u*2:(1-u)*2;return {x:home.x+out*90,y:home.y-out*36}}
   static draw(){const p=Warehouse.pos();if(art.scooter?.complete)ctx.drawImage(art.scooter,p.x,p.y,64,51);if(Warehouse.open())drawPlaque('SUPPLY DEPOT',Warehouse.plaque(),205,328,'#b68a4d',120);if(haul){ctx.save();ctx.fillStyle='#c48412';ctx.fillRect(owner.x-10,owner.y-108,20,14);ctx.restore()}}
 }
 class Crew{
   static roles(){return [{id:'server',name:'Server',hire:36,train:48,home:{x:640,y:470},blurb:'Delivers food and drinks'},{id:'worker',name:'Worker',hire:36,train:48,home:{x:560,y:470},blurb:'Cleans loungers and hauls crates'}]}
   static role(id){return Crew.roles().find(r=>r.id===id)}
-  static rank(id){return save.upgrades[id]|0}
+  static rank(id){return upRank(id)}
   static hired(id){return Crew.rank(id)>=1}
   static speed(id){return Crew.rank(id)>=2?210:140}
   static food(service){return service==='drink'||service==='grill'||service==='snack'}
   static offers(){const rows=[];for(const role of Crew.roles()){const rank=Crew.rank(role.id);if(rank<1)rows.push([role.id,`Hire ${role.name}`,role.hire,role.blurb]);else if(rank<2)rows.push([role.id,`Train ${role.name}`,role.train,'Moves faster'])}return rows}
-  static buy(id){const role=Crew.role(id);if(!role)return;const rank=Crew.rank(id);if(rank>=2){say(`The ${role.name.toLowerCase()} is already trained.`);return}const cost=rank<1?role.hire:role.train;if(save.coins<cost){say(`Need ${cost} coins to ${rank<1?'hire':'train'} the ${role.name.toLowerCase()}. You have ${save.coins}.`);return}save.coins-=cost;save.upgrades[id]=rank+1;persist();Crew.ensure();say(rank<1?`${role.name} hired. ${role.blurb}.`:`${role.name} trained. They move faster now.`);syncHud()}
+  static buy(id){return UpgradeShop.buy(id)}
   static ensure(){for(const role of Crew.roles()){const at=crew.findIndex(p=>p.id===role.id);if(!Crew.hired(role.id)){if(at>=0)crew.splice(at,1);continue}if(at>=0)continue;crew.push({id:role.id,x:role.home.x,y:role.home.y,facing:'front',path:null,pathIndex:0,stride:0,item:null,haul:false,guest:null,shop:null,aim:null})}}
   static reset(){crew.length=0;Crew.ensure()}
   static close(p,pt,dist){return Math.hypot(p.x-pt.x,p.y-pt.y)<=dist}
