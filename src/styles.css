@@ -36,10 +36,11 @@
 .picks button{background:#fff;color:#15596a;border-radius:12px;padding:10px 12px;font-weight:800;font-size:16px}
 .picks button.on{background:#15596a;color:#fff}
 
-/* Non-HUD screens. Panels follow the art-director pill: radius 18, 2px #553516,
-   cream #F7F1E2 → #FAE7D0 → #FBE5C6, and a 6px lip. Display is Lilita One.
-   Body is Fredoka. The variable file's wght axis tops out at 700, so a request
-   for 800 clamps to 700 instead of synthesizing a bold. HUD rules above stay put. */
+/* Non-HUD screens. Sizes are concept pixels on a 1672-wide frame (--u).
+   Panels keep the cream fill, 2px #553516 stroke, and a solid 6px lip.
+   Buttons inside these panels use the idle tool face. HUD rules above stay put.
+   Lilita One and Fredoka are self-hosted; there is no Google stylesheet.
+   Fredoka's wght axis tops out at 700, so a request for 800 clamps to 700. */
 @font-face {
   font-family: "Lilita One";
   font-style: normal;
@@ -55,422 +56,162 @@
   src: url("../assets/fonts/Fredoka-latin.woff2") format("woff2");
 }
 .overlay {
+  --u: calc(100vw / 1672);
   display: flex;
+  align-items: center;
   align-items: safe center;
+  justify-content: center;
   justify-content: safe center;
-  overflow: auto;
-  padding: 28px 18px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: calc(16 * var(--u));
   background: rgba(1, 50, 79, 0.46);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   color: #0B3760;
   font-family: Fredoka, system-ui, sans-serif;
   font-weight: 700;
+  font-size: calc(16 * var(--u));
 }
 .overlay .dialog.screen {
-  width: min(720px, 100%);
-  margin: 8px auto;
-  padding: 22px 22px 26px;
+  width: min(calc(720 * var(--u)), 100%);
+  max-height: calc(100vh - calc(56 * var(--u)));
+  max-height: calc(100dvh - calc(56 * var(--u)));
+  min-height: 0;
+  margin: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: calc(22 * var(--u)) calc(22 * var(--u)) calc(28 * var(--u));
   text-align: center;
   color: #0B3760;
   background: linear-gradient(180deg, #F7F1E2 0%, #FAE7D0 50%, #FBE5C6 100%);
-  border: 2px solid #553516;
-  border-radius: 18px;
+  border: calc(2 * var(--u)) solid #553516;
+  border-radius: calc(18 * var(--u));
   box-shadow:
-    0 3px 0 #BD9472,
-    0 6px 0 #A68563,
-    0 12px 18px rgba(34, 29, 11, 0.22);
+    0 calc(3 * var(--u)) 0 #BD9472,
+    0 calc(6 * var(--u)) 0 #A68563;
 }
-.overlay .dialog.screen-menu,
-.overlay .dialog.screen-summary { width: min(640px, 100%); }
-.overlay .dialog.screen-shop { width: min(780px, 100%); }
-.overlay .dialog.screen-pause { width: min(440px, 100%); }
 .overlay .dialog.screen h1 {
-  margin: 2px 0 8px;
+  margin: calc(2 * var(--u)) 0 calc(8 * var(--u));
   font-family: "Lilita One", Fredoka, system-ui, sans-serif;
   font-weight: 400;
-  font-size: 36px;
+  font-size: calc(36 * var(--u));
   line-height: 1.05;
   color: #0B3760;
 }
-.overlay .dialog.screen p,
-.overlay .dialog.screen .lede,
-.overlay .dialog.screen .small-note {
-  margin: 8px 0;
+.overlay .dialog.screen p {
+  margin: calc(8 * var(--u)) 0;
   color: #0B3760;
   font-weight: 700;
+  font-size: calc(16 * var(--u));
   line-height: 1.45;
 }
-.overlay .dialog.screen .small-note { font-size: 13px; }
 .overlay .dialog.screen .eyebrow {
-  margin: 0 0 4px;
+  margin: 0 0 calc(4 * var(--u));
   color: #844D27;
   font-family: Fredoka, system-ui, sans-serif;
   font-weight: 800;
-  font-size: 12px;
+  font-size: calc(12 * var(--u));
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
-.overlay .sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+.overlay .dialog.screen .small-note {
+  color: #0B3760 !important;
+  font-size: calc(13 * var(--u)) !important;
 }
-.overlay .dialog.screen .crest {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  margin: 0 auto 16px;
-  padding: 18px 16px 18px;
-  border: 2px solid #553516;
-  border-radius: 18px;
-  background: linear-gradient(180deg, #B96A2C 0%, #844D27 45%, #5A3319 100%);
-  box-shadow: 0 6px 0 #5A3319;
-}
-.overlay .dialog.screen .sun {
-  width: 64px;
-  height: 64px;
-  border: 2px solid #553516;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 32%, #FDD83B 0%, #FCC93D 55%, #F5B137 100%);
-  box-shadow: 0 3px 0 #5A3319;
-}
-.overlay .dialog.screen .crest .eyebrow span {
-  display: inline-block;
-  margin: 0;
-  padding: 5px 12px 7px;
-  border: 2px solid #553516;
-  border-radius: 18px;
-  background: linear-gradient(180deg, #F7F1E2 0%, #FAE7D0 50%, #FBE5C6 100%);
-  box-shadow: 0 3px 0 #BD9472, 0 6px 0 #A68563;
-  color: #0B3760;
-  font-family: Fredoka, system-ui, sans-serif;
-  font-weight: 800;
-  font-size: 11px;
-  letter-spacing: 0.08em;
-}
-.overlay .dialog.screen h1.wordmark {
-  margin: 2px 0 0;
-  color: #F7EFE3;
-  font-family: "Lilita One", Fredoka, system-ui, sans-serif;
-  font-weight: 400;
-  font-size: 56px;
-  line-height: 0.95;
-  text-shadow:
-    -3px 0 0 #01324F,
-    3px 0 0 #01324F,
-    0 -3px 0 #01324F,
-    0 3px 0 #01324F,
-    -2px -2px 0 #01324F,
-    2px -2px 0 #01324F,
-    -2px 2px 0 #01324F,
-    2px 2px 0 #01324F,
-    0 4px 0 #221D0B;
-}
-.overlay .dialog.screen h1.wordmark span { color: #FCC93D; }
-.overlay .dialog.screen .service-preview {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin: 12px 0;
-}
-.overlay .dialog.screen .service-preview span {
-  display: grid;
-  place-items: center;
-  width: 68px;
-  height: 68px;
-  border: 2px solid #553516;
-  border-radius: 18px;
-  background: linear-gradient(180deg, #F7F1E2 0%, #FAE7D0 50%, #FBE5C6 100%);
-  box-shadow: 0 3px 0 #BD9472, 0 6px 0 #A68563;
-}
-.overlay .dialog.screen .service-preview img {
-  width: 44px;
-  height: 44px;
-  object-fit: contain;
+.overlay .dialog.screen .stars {
+  margin: calc(6 * var(--u)) 0 calc(10 * var(--u));
+  color: #844D27;
+  font-size: calc(36 * var(--u));
+  letter-spacing: calc(6 * var(--u));
 }
 .overlay .dialog.screen .level-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 12px;
-  margin: 14px 0 8px;
+  gap: calc(12 * var(--u));
+  margin: calc(14 * var(--u)) 0 calc(8 * var(--u));
 }
-.overlay .dialog.screen .level-tile {
-  min-width: 0;
-  padding: 10px 4px 12px;
-  border: 2px solid #553516;
-  border-radius: 18px;
-  background: linear-gradient(180deg, #F7F1E2 0%, #FAE7D0 50%, #FBE5C6 100%);
-  box-shadow: 0 3px 0 #BD9472, 0 6px 0 #A68563;
-  color: #0B3760;
-  font-family: Fredoka, system-ui, sans-serif;
-  font-weight: 800;
-  font-size: 16px;
-  opacity: 1;
-}
-.overlay .dialog.screen .level-tile span {
-  display: block;
-  margin-top: 4px;
-  color: #844D27;
-  font-size: 12px;
-  letter-spacing: 1px;
-}
-.overlay .dialog.screen .level-tile.locked,
-.overlay .dialog.screen .level-tile:disabled {
-  background: #F1C381;
-  color: #5A3319;
-  opacity: 1;
-  cursor: default;
-}
-.overlay .dialog.screen .level-tile.locked span,
-.overlay .dialog.screen .level-tile:disabled span { color: #5A3319; }
-.overlay .dialog.screen .balance {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin: 10px auto 4px;
-  padding: 8px 14px 10px;
-  border: 2px solid #553516;
-  border-radius: 18px;
-  background: linear-gradient(180deg, #F7F1E2 0%, #FAE7D0 50%, #FBE5C6 100%);
-  box-shadow: 0 3px 0 #BD9472, 0 6px 0 #A68563;
-  color: #0B3760;
-  font-weight: 800;
-}
-.overlay .coin,
-.overlay .coin-ico {
-  display: inline-block;
-  width: 18px;
-  height: 18px;
-  border: 2px solid #553516;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #FDD83B, #F5B137);
-  vertical-align: -3px;
-}
-.overlay .dialog.screen .shift-name {
-  margin: 0;
-  color: #085183;
-  font-weight: 800;
-}
-.overlay .dialog.screen .stars {
-  margin: 6px 0 10px;
-  color: #844D27;
-  font-size: 36px;
-  letter-spacing: 6px;
-}
-.overlay .dialog.screen .stat-pills {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
-  margin: 12px 0;
-}
-.overlay .dialog.screen .stat-pill {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 10px 10px;
-  border: 2px solid #553516;
-  border-radius: 18px;
-  background: linear-gradient(180deg, #F7F1E2 0%, #FAE7D0 50%, #FBE5C6 100%);
-  box-shadow: 0 3px 0 #BD9472, 0 6px 0 #A68563;
-  text-align: left;
-}
-.overlay .dialog.screen .stat-pill small {
-  display: block;
-  color: #844D27;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-.overlay .dialog.screen .stat-pill strong {
-  display: block;
-  color: #0B3760;
-  font-size: 16px;
-  font-weight: 800;
-}
-.overlay .dialog.screen .pill-ico {
-  display: grid;
-  place-items: center;
-  flex: 0 0 auto;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: #844D27;
-  color: #F7F1E2;
-  font-size: 13px;
-  font-weight: 800;
-}
-.overlay .dialog.screen .rule {
-  margin: 8px 0;
-  padding: 10px 12px 12px;
-  border: 2px solid #553516;
-  border-radius: 18px;
-  background: linear-gradient(180deg, #F7F1E2 0%, #FAE7D0 50%, #FBE5C6 100%);
-  box-shadow: 0 3px 0 #BD9472, 0 6px 0 #A68563;
-  font-weight: 700;
-}
-.overlay .dialog.screen .button-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  margin-top: 16px;
+.overlay .dialog.screen .level-grid.scrollable {
+  max-height: min(calc(460 * var(--u)), 46dvh);
+  overflow: auto;
+  padding: calc(4 * var(--u)) calc(4 * var(--u)) calc(12 * var(--u));
 }
 .overlay .dialog.screen .button-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 12px;
-  margin: 16px 0 0;
-}
-.overlay .dialog.screen .button-stack > .primary,
-.overlay .dialog.screen .button-stack > .secondary { width: 100%; }
-.overlay .dialog.screen .primary,
-.overlay .dialog.screen .secondary,
-.overlay .dialog.screen .upgrade {
-  min-width: 0;
-  padding: 12px 16px;
-  border: 2px solid #553516;
-  border-radius: 18px;
-  color: #0B3760;
-  font-family: Fredoka, system-ui, sans-serif;
-  font-weight: 800;
-  font-size: 16px;
-  line-height: 1.2;
-}
-.overlay .dialog.screen .primary {
-  background: linear-gradient(180deg, #FDD83B 0%, #FCC93D 55%, #F5B137 100%);
-  box-shadow: 0 3px 0 #BD9472, 0 6px 0 #A68563;
-}
-.overlay .dialog.screen .secondary,
-.overlay .dialog.screen .upgrade {
-  background: linear-gradient(180deg, #F7F1E2 0%, #FAE7D0 50%, #FBE5C6 100%);
-  box-shadow: 0 3px 0 #BD9472, 0 6px 0 #A68563;
-}
-.overlay .dialog.screen .primary:active,
-.overlay .dialog.screen .secondary:active,
-.overlay .dialog.screen .upgrade:active,
-.overlay .dialog.screen .level-tile:not(:disabled):active {
-  transform: translateY(4px);
-  box-shadow: 0 2px 0 #A68563;
+  grid-template-columns: repeat(auto-fit, minmax(calc(180 * var(--u)), 1fr));
+  gap: calc(12 * var(--u));
+  margin: calc(16 * var(--u)) 0 0;
 }
 .overlay .dialog.screen .shop-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 14px;
-  margin: 14px 0 4px;
+  grid-template-columns: repeat(auto-fit, minmax(calc(210 * var(--u)), 1fr));
+  gap: calc(14 * var(--u));
+  margin: calc(14 * var(--u)) 0 calc(4 * var(--u));
+}
+.overlay .dialog.screen button {
+  min-width: 0;
+  padding: calc(12 * var(--u)) calc(16 * var(--u));
+  border: calc(2 * var(--u)) solid #393827;
+  border-radius: calc(18 * var(--u));
+  background: linear-gradient(180deg, #fff 0%, #FCF5E8 20%, #F9EBDB 100%);
+  box-shadow: 0 calc(6 * var(--u)) 0 #8F989C;
+  color: #0B3760;
+  font-family: Fredoka, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: calc(16 * var(--u));
+  line-height: 1.2;
+}
+.overlay .dialog.screen button:active:not(:disabled) {
+  transform: translateY(calc(4 * var(--u)));
+  box-shadow: 0 calc(2 * var(--u)) 0 #8F989C;
+}
+.overlay .dialog.screen .level-tile {
+  padding: calc(10 * var(--u)) calc(4 * var(--u)) calc(12 * var(--u));
+}
+.overlay .dialog.screen .level-tile span {
+  display: block;
+  margin-top: calc(4 * var(--u));
+  color: #844D27;
+  font-size: calc(12 * var(--u));
+  letter-spacing: calc(1 * var(--u));
+}
+.overlay .dialog.screen button.level-tile.locked,
+.overlay .dialog.screen button.level-tile:disabled {
+  background: #F1C381;
+  color: #5A3319;
+  cursor: default;
+  opacity: 1;
+}
+.overlay .dialog.screen button.level-tile.locked span,
+.overlay .dialog.screen button.level-tile:disabled span { color: #5A3319; }
+.overlay .dialog.screen button.level-tile.bonus:not(.locked):not(:disabled) {
+  background: linear-gradient(180deg, #FDD83B 0%, #FCC93D 55%, #F5B137 100%);
 }
 .overlay .dialog.screen .upgrade {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  padding: 12px 12px 16px;
-}
-.overlay .dialog.screen .upgrade-art {
-  display: grid;
-  place-items: center;
-  width: 72px;
-  height: 72px;
-}
-.overlay .dialog.screen .upgrade-art img {
-  width: 64px;
-  height: 64px;
-  object-fit: contain;
-}
-.overlay .dialog.screen .upgrade-name { font-size: 16px; font-weight: 800; }
-.overlay .dialog.screen .upgrade-effect {
-  color: #085183;
-  font-size: 13px;
-  font-weight: 700;
-}
-.overlay .dialog.screen .upgrade-cost {
-  margin-top: 6px;
-  padding: 4px 10px 6px;
-  border: 2px solid #553516;
-  border-radius: 18px;
-  background: linear-gradient(180deg, #FDD83B, #F5B137);
-  box-shadow: 0 3px 0 #BD9472, 0 6px 0 #A68563;
-  color: #0B3760;
-  font-weight: 800;
-}
-.overlay .dialog.screen .upgrade.is-short .upgrade-cost {
-  background: #F4789D;
-  color: #0B3760;
-}
-.overlay .dialog.screen .pause-mark {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  width: 76px;
-  height: 76px;
-  margin: 2px auto 12px;
-  border: 6px solid #fff;
-  border-radius: 50%;
-  background: radial-gradient(circle at 50% 25%, #51B0D3, #2089BB 55%, #157CAD);
-  box-shadow: inset 0 0 0 3px #085183, 0 4px 6px rgba(0, 0, 0, 0.3);
-}
-.overlay .dialog.screen .pause-mark i {
-  display: block;
-  width: 8px;
-  height: 26px;
-  border-radius: 3px;
-  background: #fff;
-}
-@media (max-width: 640px) {
-  .overlay { padding: 16px 12px; }
-  .overlay .dialog.screen { padding: 16px 14px 18px; border-radius: 18px; }
-  .overlay .dialog.screen h1 { font-size: 30px; }
-  .overlay .dialog.screen h1.wordmark { font-size: 44px; }
-  .overlay .dialog.screen .shop-grid,
-  .overlay .dialog.screen .button-row { grid-template-columns: 1fr; }
-  .overlay .dialog.screen .stat-pills { grid-template-columns: 1fr 1fr; }
-  .overlay .dialog.screen .level-tile { border-radius: 18px; font-size: 14px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .overlay .dialog.screen .primary:active,
-  .overlay .dialog.screen .secondary:active,
-  .overlay .dialog.screen .upgrade:active,
-  .overlay .dialog.screen .level-tile:not(:disabled):active { transform: none; }
-}
-
-.overlay .dialog.screen .level-grid.scrollable {
-  max-height: min(460px, 52vh);
-  overflow: auto;
-  padding: 4px 4px 12px;
-}
-.overlay .dialog.screen .level-tile.bonus:not(.locked):not(:disabled) {
-  background: linear-gradient(180deg, #FDD83B 0%, #FCC93D 55%, #F5B137 100%);
+  gap: calc(4 * var(--u));
 }
 .overlay .dialog.screen .upgrade small {
   display: block;
-  margin-top: 4px;
+  margin-top: calc(4 * var(--u));
   color: #085183;
-  font-size: 13px;
+  font-size: calc(13 * var(--u));
   font-weight: 700;
 }
-.overlay .dialog.screen .primary:disabled {
+.overlay .dialog.screen button.primary:disabled {
   background: #F1C381;
   color: #5A3319;
   cursor: default;
   transform: none;
 }
-.overlay .dialog.screen .picks button {
-  border: 2px solid #553516;
-  border-radius: 18px;
-  background: linear-gradient(180deg, #F7F1E2 0%, #FAE7D0 50%, #FBE5C6 100%);
-  box-shadow: 0 3px 0 #BD9472, 0 6px 0 #A68563;
-  color: #0B3760;
-  font-family: Fredoka, system-ui, sans-serif;
-  font-weight: 800;
-}
 .overlay .dialog.screen .picks button.on {
-  background: linear-gradient(180deg, #FDD83B 0%, #FCC93D 55%, #F5B137 100%);
+  background: linear-gradient(180deg, #FEFEFE 0%, #DEF7FD 100%);
+  border-color: #72C9EE;
+  box-shadow: 0 calc(6 * var(--u)) 0 #68C1E2;
   color: #0B3760;
+}
+@media (prefers-reduced-motion: reduce) {
+  .overlay .dialog.screen button:active:not(:disabled) { transform: none; }
 }
