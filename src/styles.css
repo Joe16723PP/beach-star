@@ -55,6 +55,19 @@
   font-display: swap;
   src: url("../assets/fonts/Fredoka-latin.woff2") format("woff2");
 }
+/* Lock document scroll while any modal overlay is open; released on closeModal.
+   position:fixed collapses scrollHeight to the viewport (overflow:hidden alone does not). */
+html.overlay-open {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+body.overlay-open {
+  overflow: hidden;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  overscroll-behavior: none;
+}
 .overlay {
   --u: calc(100vw / 1672);
   display: flex;
@@ -76,8 +89,8 @@
 }
 .overlay .dialog.screen {
   width: min(100%, max(300px,calc(720*var(--u))));
-  max-height: calc(100vh - 12px);
-  max-height: calc(100dvh - 12px);
+  max-height: calc(100vh - 12px - 2 * 16 * var(--u));
+  max-height: calc(100dvh - 12px - 2 * 16 * var(--u));
   min-height: 0;
   margin: auto;
   display: flex;
