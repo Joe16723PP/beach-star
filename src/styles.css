@@ -8,7 +8,7 @@
 
 /* Horizontal phones: the beach fills the screen. Prepare and collect stay on the map. */
 @media (orientation: landscape) and (max-height: 520px) {
-  body { overflow: hidden; }
+  html, body { overflow: hidden; overscroll-behavior: none; }
   .shell { max-width: none; height: 100dvh; padding: 2px 6px; display: flex; flex-direction: column; position: relative; }
   .brand, .shift-card { display: none; }
   .topbar { position: absolute; top: 6px; left: 50%; transform: translateX(-50%); right: auto; width: auto; z-index: 3; min-height: 28px; margin: 0; display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 6px; grid-template-columns: none; pointer-events: none; }
@@ -64,6 +64,7 @@
   justify-content: safe center;
   overflow-x: hidden;
   overflow-y: auto;
+  overscroll-behavior: contain;
   padding: calc(16*var(--u));
   background: rgba(1, 50, 79, 0.46);
   backdrop-filter: none;
@@ -149,6 +150,7 @@
   min-height: 0;
   overflow-x: hidden;
   overflow-y: auto;
+  overscroll-behavior: contain;
 }
 .overlay .dialog.screen .button-row {
   flex-shrink: 0;
