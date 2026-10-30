@@ -79,8 +79,10 @@
   max-height: calc(100dvh - calc(56*var(--u)));
   min-height: 0;
   margin: auto;
+  display: flex;
+  flex-direction: column;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
   padding:
     max(12px,calc(22*var(--u)))
     max(12px,calc(22*var(--u)))
@@ -142,10 +144,17 @@
 }
 /* Button lip is max(4px,calc(6*var(--u))). The padding and margin floors
    keep that lip from painting on the next control when --u is small. */
+.overlay .dialog.screen .dialog-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
 .overlay .dialog.screen .button-row {
+  flex-shrink: 0;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, max(8.5em,calc(180*var(--u)))), 1fr));
-  gap: max(8px,calc(12*var(--u)));
+  gap: max(6px,calc(12*var(--u)));
   margin: max(8px,calc(16*var(--u))) 0 max(8px,calc(8*var(--u)));
   padding-bottom: max(4px,calc(6*var(--u)));
   min-width: 0;
@@ -153,7 +162,7 @@
 .overlay .dialog.screen .shop-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, max(8.5em,calc(210*var(--u)))), 1fr));
-  gap: max(8px,calc(14*var(--u)));
+  gap: max(6px,calc(14*var(--u)));
   margin: max(8px,calc(14*var(--u))) 0 max(8px,calc(4*var(--u)));
   padding-bottom: max(4px,calc(6*var(--u)));
   min-width: 0;
