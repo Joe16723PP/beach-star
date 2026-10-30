@@ -8,7 +8,7 @@
 
 /* Horizontal phones: the beach fills the screen. Prepare and collect stay on the map. */
 @media (orientation: landscape) and (max-height: 520px) {
-  body { overflow: hidden; }
+  html, body { overflow: hidden; overscroll-behavior: none; }
   .shell { max-width: none; height: 100dvh; padding: 2px 6px; display: flex; flex-direction: column; position: relative; }
   .brand, .shift-card { display: none; }
   .topbar { position: absolute; top: 6px; left: 50%; transform: translateX(-50%); right: auto; width: auto; z-index: 3; min-height: 28px; margin: 0; display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 6px; grid-template-columns: none; pointer-events: none; }
@@ -35,3 +35,251 @@
 .picks{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:8px}
 .picks button{background:#fff;color:#15596a;border-radius:12px;padding:10px 12px;font-weight:800;font-size:16px}
 .picks button.on{background:#15596a;color:#fff}
+
+/* Non-HUD screens. Sizes are concept pixels on a 1672-wide frame (--u).
+   Panels keep the cream fill, 2px #553516 stroke, and a solid 6px lip.
+   Buttons inside these panels use the idle tool face. HUD rules above stay put.
+   Lilita One and Fredoka are self-hosted; there is no Google stylesheet.
+   Fredoka's wght axis tops out at 700, so a request for 800 clamps to 700. */
+@font-face {
+  font-family: "Lilita One";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/LilitaOne-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: Fredoka;
+  font-style: normal;
+  font-weight: 700 800;
+  font-display: swap;
+  src: url("../assets/fonts/Fredoka-latin.woff2") format("woff2");
+}
+/* Lock document scroll while any modal overlay is open; released on closeModal.
+   position:fixed collapses scrollHeight to the viewport (overflow:hidden alone does not). */
+html.overlay-open {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+body.overlay-open {
+  overflow: hidden;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  overscroll-behavior: none;
+}
+.overlay {
+  --u: calc(100vw / 1672);
+  display: flex;
+  align-items: center;
+  align-items: safe center;
+  justify-content: center;
+  justify-content: safe center;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: calc(16*var(--u));
+  background: rgba(1, 50, 79, 0.46);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  color: #0B3760;
+  font-family: Fredoka, system-ui, sans-serif;
+  font-weight: 700;
+  font-size: max(16px,calc(16*var(--u)));
+}
+.overlay .dialog.screen {
+  width: min(100%, max(300px,calc(720*var(--u))));
+  max-height: calc(100vh - 12px - 2 * 16 * var(--u));
+  max-height: calc(100dvh - 12px - 2 * 16 * var(--u));
+  min-height: 0;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  padding:
+    max(12px,calc(22*var(--u)))
+    max(12px,calc(22*var(--u)))
+    max(16px,calc(28*var(--u)));
+  text-align: center;
+  color: #0B3760;
+  background: linear-gradient(180deg, #F7F1E2 0%, #FAE7D0 50%, #FBE5C6 100%);
+  border: max(2px,calc(2*var(--u))) solid #553516;
+  border-radius: calc(18*var(--u));
+  box-shadow: 0 max(2px,calc(3*var(--u))) 0 #BD9472,0 max(4px,calc(6*var(--u))) 0 #A68563;
+}
+.overlay .dialog.screen h1 {
+  margin: calc(2*var(--u)) 0 calc(8*var(--u));
+  font-family: "Lilita One", Fredoka, system-ui, sans-serif;
+  font-weight: 400;
+  font-size: max(22px,calc(36*var(--u)));
+  line-height: 1.05;
+  overflow-wrap: break-word;
+  color: #0B3760;
+}
+.overlay .dialog.screen p {
+  margin: calc(8*var(--u)) 0;
+  color: #0B3760;
+  font-weight: 700;
+  font-size: max(16px,calc(16*var(--u)));
+  line-height: 1.45;
+}
+.overlay .dialog.screen .eyebrow {
+  margin: 0 0 calc(4*var(--u));
+  color: #844D27;
+  font-family: Fredoka, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: max(11px,calc(13*var(--u)));
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.overlay .dialog.screen .small-note {
+  color: #0B3760 !important;
+  font-size: max(11px,calc(13*var(--u))) !important;
+}
+.overlay .dialog.screen .stars {
+  margin: calc(6*var(--u)) 0 calc(10*var(--u));
+  color: #844D27;
+  font-size: max(22px,calc(36*var(--u)));
+  letter-spacing: max(3px,calc(6*var(--u)));
+}
+/* Scoped under the screen dialog. A bare .level-grid would also match
+   master's unscoped rule and the style tag game.js injects. */
+.overlay .dialog.screen .level-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: max(6px,calc(12*var(--u)));
+  margin: calc(14*var(--u)) 0 calc(8*var(--u));
+}
+.overlay .dialog.screen .level-grid.scrollable {
+  max-height: min(max(180px,calc(460*var(--u))),46dvh);
+  overflow: auto;
+  padding: max(4px,calc(4*var(--u))) max(4px,calc(4*var(--u))) max(8px,calc(12*var(--u)));
+}
+/* Button lip is max(4px,calc(6*var(--u))). The padding and margin floors
+   keep that lip from painting on the next control when --u is small. */
+.overlay .dialog.screen .dialog-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.overlay .dialog.screen .button-row {
+  flex-shrink: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, max(8.5em,calc(180*var(--u)))), 1fr));
+  gap: max(6px,calc(12*var(--u)));
+  margin: max(8px,calc(16*var(--u))) 0 max(8px,calc(8*var(--u)));
+  padding-bottom: max(4px,calc(6*var(--u)));
+  min-width: 0;
+}
+.overlay .dialog.screen .button-row .primary,
+.overlay .dialog.screen .button-row .secondary {
+  min-height: 44px;
+}
+
+.overlay .dialog.screen .shop-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, max(8.5em,calc(210*var(--u)))), 1fr));
+  gap: max(6px,calc(14*var(--u)));
+  margin: max(8px,calc(14*var(--u))) 0 max(8px,calc(4*var(--u)));
+  padding-bottom: max(4px,calc(6*var(--u)));
+  min-width: 0;
+}
+.overlay .dialog.screen button {
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: break-word;
+  padding: max(8px,calc(12*var(--u))) max(10px,calc(16*var(--u)));
+  border: max(2px,calc(2*var(--u))) solid #393827;
+  border-radius: calc(18*var(--u));
+  background: linear-gradient(180deg, #fff 0%, #FCF5E8 20%, #F9EBDB 100%);
+  box-shadow: 0 max(4px,calc(6*var(--u))) 0 #8F989C;
+  color: #0B3760;
+  font-family: Fredoka, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: max(16px,calc(16*var(--u)));
+  line-height: 1.2;
+}
+.overlay .dialog.screen button.primary:not(:disabled) {
+  background: linear-gradient(180deg, #FDD83B 0%, #FCC93D 55%, #F5B137 100%);
+  box-shadow: 0 max(2px,calc(3*var(--u))) 0 #BD9472,0 max(4px,calc(6*var(--u))) 0 #A68563;
+}
+.overlay .dialog.screen button.primary:not(:disabled):active {
+  box-shadow: 0 max(2px,calc(2*var(--u))) 0 #A68563;
+}
+.overlay .dialog.screen button:active:not(:disabled) {
+  transform: translateY(max(2px,calc(4*var(--u))));
+  box-shadow: 0 max(2px,calc(2*var(--u))) 0 #8F989C;
+}
+.overlay .dialog.screen .level-tile {
+  padding: calc(10*var(--u)) calc(4*var(--u)) calc(12*var(--u));
+}
+.overlay .dialog.screen .level-tile span {
+  display: block;
+  margin-top: calc(4*var(--u));
+  color: #844D27;
+  font-size: max(11px,calc(12*var(--u)));
+  letter-spacing: calc(1*var(--u));
+}
+.overlay .dialog.screen button.level-tile.locked,
+.overlay .dialog.screen button.level-tile:disabled {
+  background: #F1C381;
+  color: #5A3319;
+  cursor: default;
+  opacity: 1;
+}
+.overlay .dialog.screen button.level-tile.locked span,
+.overlay .dialog.screen button.level-tile:disabled span { color: #5A3319; }
+.overlay .dialog.screen button.level-tile.bonus:not(.locked):not(:disabled) {
+  background: linear-gradient(180deg, #FDD83B 0%, #FCC93D 55%, #F5B137 100%);
+}
+.overlay .dialog.screen .upgrade {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(4*var(--u));
+}
+.overlay .dialog.screen .upgrade small {
+  display: block;
+  margin-top: calc(4*var(--u));
+  color: #085183;
+  font-size: max(11px,calc(13*var(--u)));
+  font-weight: 700;
+}
+.overlay .dialog.screen button.primary:disabled {
+  background: #F1C381;
+  color: #5A3319;
+  cursor: default;
+  transform: none;
+}
+.overlay .dialog.screen .picks {
+  min-width: 0;
+}
+.overlay .dialog.screen .picks button {
+  flex: 1 1 7.5em;
+  min-width: min(100%, 7.5em);
+  max-width: 100%;
+}
+.overlay .dialog.screen .picks button.on {
+  background: linear-gradient(180deg, #FEFEFE 0%, #DEF7FD 100%);
+  border-color: #72C9EE;
+  box-shadow:0 max(4px,calc(6*var(--u))) 0 #68C1E2;
+  color: #0B3760;
+}
+@media (prefers-reduced-motion: reduce) {
+  .overlay .dialog.screen button:active:not(:disabled) { transform: none; }
+}
+@media (max-width: 600px) {
+  .topbar:not(:has(.icon-button:not([hidden]))) .shift-card {
+    margin-right: calc(44px + 5px + 44px + 5px);
+  }
+  .key-help {
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+}
+/* Master's kbd shorthand stays in the HUD block. This later rule is the 11px floor. */
+kbd { font:900 11px Nunito; }
