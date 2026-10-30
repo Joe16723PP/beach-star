@@ -48,7 +48,7 @@ static rules=[
 [/^(.+) is already full\.$/,(m,s)=>`${s} is full`],
 [/^Order supplies at the Supply Depot/,()=>'Order at the Supply Depot'],
 [/^Not enough stock at (.+)\. Tap/,(m,s)=>`Refill ${s}`],
-[/^Filling (\d+) (.+?) at .+ \((\d+)s\)/,(m,n,p,t)=>`Filling ${n} ${p}`.slice(0,22)+` (${t}s)`],
+[/^Filling (\d+) (.+?) at .+ \((\d+)s\)/,(m,n,p,t)=>StatusCopy.fit(`Filling ${n} ${p} (${t}s)`)],
 [/^Carry limit is 2/,()=>'Carry limit 2. Deliver first'],
 [/^Took one (.+?)\. (\d+) still stacked/,(m,p,n)=>`Took ${p}. ${n} left`],
 [/^Picked up (.+?)\. Tap that guest/,(m,p)=>`Got ${p}. Tap the guest`],
@@ -105,9 +105,9 @@ static rules=[
 [/^Shade raised their happy faces/,()=>'Shade: 4 happy faces'],
 [/^Shade is ready on this lounger/,()=>'Shade is ready'],
 ];
-static compact=matchMedia('(orientation:landscape) and (max-height:520px), (orientation:landscape) and (max-width:600px)');
+static compact=matchMedia('(orientation:landscape) and (max-height:520px), (orientation:landscape) and (max-width:600px), (min-width:1000px) and (max-width:1399px)');
 static short(m){for(const [re,f] of StatusCopy.rules){const x=m.match(re);if(x)return StatusCopy.fit(f(...x))}return StatusCopy.fit(m.split(/(?<=[.!])\s/)[0].replace(/\.$/,''))}
-static fit(s){return s.length<=28?s:s.slice(0,27).trimEnd()+'…'}
+static fit(s,max=28){if(s.length<=max)return s;const m=s.match(/^(.*?)(\s\([^)]*\))?$/),tail=m[2]||'',w=m[1].split(' ');while(w.length>1&&(w.join(' ')+tail).length>max)w.pop();while(w.length>1&&/^(and|or|to|at|the|a|of|for|on|in)$/i.test(w[w.length-1]))w.pop();return w.join(' ').replace(/[\s,.:;·-]+$/,'')+tail}
 static show(el,m){el.title=m;el.setAttribute('aria-label',m);el.textContent=StatusCopy.compact.matches?StatusCopy.short(m):m;el.dataset.full=m}
 }
 StatusCopy.compact.addEventListener('change',()=>{const el=document.getElementById('message');if(el.dataset.full)StatusCopy.show(el,el.dataset.full)});
