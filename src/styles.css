@@ -149,3 +149,10 @@
   .game-card > .statusbar{bottom:calc(100% + 12px);top:auto;left:12px;right:12px;width:auto;min-height:42px}
   .game-card > .statusbar p{font-size:13px}
 }
+
+/* Pause/recap dialog: fit short viewports (AD: max-height 100dvh-12px, scrollable body, pinned actions) */
+.overlay{align-items:safe center;overflow-x:hidden;overflow-y:auto}
+.dialog{max-height:calc(100dvh - 12px);max-height:calc(100vh - 12px);display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.dialog-body{flex:1 1 auto;min-height:0;overflow-x:hidden;overflow-y:auto}
+.dialog .button-row{flex-shrink:0;margin-top:12px}
+.dialog .button-row .primary,.dialog .button-row .secondary{min-height:44px}
