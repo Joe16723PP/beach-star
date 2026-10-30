@@ -141,6 +141,8 @@
   .game-card > .statusbar{position:static;transform:none;width:auto;height:22px;padding:0 8px;border-radius:0;box-shadow:none;flex-direction:row;justify-content:center;gap:6px;background:#f3f9f5}
   .game-card > .statusbar p{flex:0 1 auto;font-size:12px;line-height:22px;white-space:nowrap}
   .game-card > .statusbar .status-dot{width:6px;height:6px;box-shadow:0 0 0 3px #d9f1e5}
+  /* hint: top HUD strip, ≥6px under pills, clear of guests/queue at 16:9 short landscape */
+  .hud-hint{top:calc(72*var(--u));left:calc(35*var(--u));width:auto;max-width:calc(520*var(--u));height:calc(53*var(--u))}
 }
 /* 4 Portrait: above the canvas in the spare top band, full copy, ≤3 lines */
 @media (orientation:portrait){
