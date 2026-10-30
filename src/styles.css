@@ -150,9 +150,11 @@
   .game-card > .statusbar p{font-size:13px}
 }
 
-/* Pause/recap dialog: fit short viewports (AD: max-height 100dvh-12px, scrollable body, pinned actions) */
-.overlay{align-items:safe center;overflow-x:hidden;overflow-y:auto}
-.dialog{max-height:calc(100dvh - 12px);max-height:calc(100vh - 12px);display:flex;flex-direction:column;min-height:0;overflow:hidden}
-.dialog-body{flex:1 1 auto;min-height:0;overflow-x:hidden;overflow-y:auto}
+/* Pause/recap dialog: fit short viewports (offset inside cap; scrollable body; no page scroll) */
+.overlay{--u:calc(100vw / 1672);align-items:safe center;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain}
+.dialog .eyebrow{font-size:max(11px,calc(13*var(--u)))}
+.upgrade small{font-size:max(11px,calc(13*var(--u)))}
+.dialog{max-height:calc(100dvh - 12px - 18px);max-height:calc(100vh - 12px - 18px);display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.dialog-body{flex:1 1 auto;min-height:0;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain}
 .dialog .button-row{flex-shrink:0;margin-top:12px}
 .dialog .button-row .primary,.dialog .button-row .secondary{min-height:44px}
