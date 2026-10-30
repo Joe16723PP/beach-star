@@ -75,8 +75,8 @@
 }
 .overlay .dialog.screen {
   width: min(100%, max(300px,calc(720*var(--u))));
-  max-height: calc(100vh - calc(56*var(--u)));
-  max-height: calc(100dvh - calc(56*var(--u)));
+  max-height: calc(100vh - 12px);
+  max-height: calc(100dvh - 12px);
   min-height: 0;
   margin: auto;
   display: flex;
@@ -159,6 +159,11 @@
   padding-bottom: max(4px,calc(6*var(--u)));
   min-width: 0;
 }
+.overlay .dialog.screen .button-row .primary,
+.overlay .dialog.screen .button-row .secondary {
+  min-height: 44px;
+}
+
 .overlay .dialog.screen .shop-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, max(8.5em,calc(210*var(--u)))), 1fr));
